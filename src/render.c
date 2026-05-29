@@ -37,7 +37,7 @@ static unsigned int sample_texture(t_texture *tex, int tx, int ty)
     char *pixel;
 
     if (!tex || !tex->addr)
-        return (0x00FF00FF);  /* magenta = texture manquante               */
+        return (0x00FF000F);  /* magenta = texture manquante               */
     pixel = tex->addr + ty * tex->line_len + tx * (tex->bpp / 8);
     return (*(unsigned int *)pixel);
 }
@@ -170,7 +170,7 @@ static void draw_wall_strip(t_game *game, int col, t_ray *ray)
                 + (double)ray->line_h / 2.0) * tex_step;
 
     y = ray->draw_y0;
-    while (y < ray->draw_y1)
+    while (y <= ray->draw_y1)
     {
         /* Coordonnée Y dans la texture, bornée via AND (modulo puissance 2) */
         tex_y = (int)tex_pos & (TEX_H - 1);
@@ -179,9 +179,9 @@ static void draw_wall_strip(t_game *game, int col, t_ray *ray)
         /* Lire la couleur dans la texture */
         color = sample_texture(tex, ray->tex_x, tex_y);
 
-        /* Assombrir les Y-sides (Nord/Sud) pour simuler un éclairage       */
-        if (ray->side == 1)
-            color = (color >> 1) & 0x7F7F7F;
+        // /* Assombrir les Y-sides (Nord/Sud) pour simuler un éclairage       */
+        // if (ray->side == 1)
+        //     color = (color >> 1) & 0x7F7F7F;
 
         put_pixel(&game->buf, col, y, color);
         y++;

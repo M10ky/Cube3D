@@ -6,7 +6,7 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/29 19:47:24 by miokrako          #+#    #+#             */
-/*   Updated: 2026/05/29 20:32:41 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/05/29 22:15:35 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@
 **                               LEFT=123, RIGHT=124.
 */
 # define KEY_ESC     65307
-# define KEY_W       119
-# define KEY_A       97
+# define KEY_Z       122
+# define KEY_Q       113
 # define KEY_S       115
 # define KEY_D       100
 # define KEY_LEFT    65361

@@ -11,24 +11,31 @@ MLXDIR = minilibx-linux
 SRCS = $(wildcard $(SRCDIR)/*.c)
 OBJS = $(SRCS:.c=.o)
 
-# MiniLibX (Added -L to find libmlx.a)
+# MiniLibX paths and targets
+MLX_LIB = $(MLXDIR)/libmlx.a
 MLX_FLAGS = -L$(MLXDIR) -lmlx -lXext -lX11 -lm
 
-# Includes (Added -I $(MLXDIR) so you can do #include "mlx.h")
+# Includes
 INCLUDES = -I $(INCDIR) -I $(MLXDIR)
 
 .PHONY: all clean fclean re
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^ $(MLX_FLAGS)
+# 1. Added $(MLX_LIB) as a dependency here
+$(NAME): $(MLX_LIB) $(OBJS)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $(OBJS) $(MLX_FLAGS)
+
+# 2. This rule compiles MiniLibX if libmlx.a doesn't exist
+$(MLX_LIB):
+	make -C $(MLXDIR)
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
 	rm -f $(OBJS)
+	make -C $(MLXDIR) clean
 
 fclean: clean
 	rm -f $(NAME)

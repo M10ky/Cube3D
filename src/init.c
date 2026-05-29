@@ -273,6 +273,14 @@ void    init_player(t_game *game)
     p->plane_y = cfg->spawn_plane_y;
 }
 
+
+static void init_hooks(t_game *game)
+{
+    mlx_hook(game->win, EVT_KEY_PRESS,   1L<<0, key_press,    game);
+    mlx_hook(game->win, EVT_KEY_RELEASE, 1L<<1, key_release,  game);
+    mlx_hook(game->win, EVT_CLOSE,       0,     handle_close, game);
+    mlx_loop_hook(game->mlx,                    game_loop,    game);
+}
 /*
 ** init_game : orchestre toute l'initialisation.
 ** ───────────────────────────────────────────────
@@ -297,5 +305,7 @@ int init_game(t_game *game)
     if (init_textures(game) != 0)
         return (1);
     init_player(game);
+    init_hooks(game);
     return (0);
 }
+

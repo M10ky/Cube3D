@@ -41,11 +41,11 @@ int     key_press(int keycode, void *param)
     game = (t_game *)param;
     if (keycode == KEY_ESC)
         cleanup_exit(game);
-    else if (keycode == KEY_W)
+    else if (keycode == KEY_Z)
         game->keys.w = 1;
     else if (keycode == KEY_S)
         game->keys.s = 1;
-    else if (keycode == KEY_A)
+    else if (keycode == KEY_Q)
         game->keys.a = 1;
     else if (keycode == KEY_D)
         game->keys.d = 1;
@@ -68,11 +68,11 @@ int     key_release(int keycode, void *param)
     t_game  *game;
 
     game = (t_game *)param;
-    if (keycode == KEY_W)
+    if (keycode == KEY_Z)
         game->keys.w = 0;
     else if (keycode == KEY_S)
         game->keys.s = 0;
-    else if (keycode == KEY_A)
+    else if (keycode == KEY_Q)
         game->keys.a = 0;
     else if (keycode == KEY_D)
         game->keys.d = 0;
