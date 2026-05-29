@@ -1,59 +1,36 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: jonandri <jonandri@student.42antananari    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2026/04/16 12:01:50 by jonandri          #+#    #+#              #
-#    Updated: 2026/05/06 20:45:19 by jonandri         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+NAME = Cube3D
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror -g
 
-NAME = cube
+# Dossiers
+SRCDIR = src
+INCDIR = includes
+MLXDIR = minilibx-linux
 
-SRCS = main.c sources/pixel_utils.c sources/read_files.c sources/map_init.c sources/get_next_line.c \
-	sources/get_next_line_utils.c sources/parse_utils.c sources/parse_color.c sources/map_parsing.c \
-	
+# Sources
+SRCS = $(wildcard $(SRCDIR)/*.c)
 OBJS = $(SRCS:.c=.o)
 
-MLX_PATH = minilibx-linux
-LIBFT_PATH = Libft
-LIBFT = $(LIBFT_PATH)/libft.a
+# MiniLibX (Added -L to find libmlx.a)
+MLX_FLAGS = -L$(MLXDIR) -lmlx -lXext -lX11 -lm
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror
-
-HEADER = -I$(MLX_PATH) -I./header -I$(LIBFT_PATH)
-
-MLX_FLAG = -L$(MLX_PATH) -lmlx -lXext -lX11 -lm
-
-RM = rm -f
-
-all: $(NAME)
-
-%.o: %.c
-	$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
-
-$(LIBFT):
-	$(MAKE) -C $(LIBFT_PATH)
-
-$(MLX_PATH)/libmlx.a:
-	$(MAKE) -C $(MLX_PATH)
-
-$(NAME): $(OBJS) $(LIBFT) $(MLX_PATH)/libmlx.a
-	$(CC) $(CFLAGS) $(OBJS) $(MLX_FLAG) -o $(NAME)
-
-clean:
-	$(RM) $(OBJS)
-	$(MAKE) -C $(MLX_PATH) clean
-	$(MAKE) -C $(LIBFT_PATH) clean
-
-fclean: clean
-	$(RM) $(NAME)
-	$(MAKE) -C $(LIBFT_PATH) fclean
-
-re: fclean all
+# Includes (Added -I $(MLXDIR) so you can do #include "mlx.h")
+INCLUDES = -I $(INCDIR) -I $(MLXDIR)
 
 .PHONY: all clean fclean re
 
+all: $(NAME)
+
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^ $(MLX_FLAGS)
+
+%.o: %.c
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+clean:
+	rm -f $(OBJS)
+
+fclean: clean
+	rm -f $(NAME)
+
+re: fclean all
