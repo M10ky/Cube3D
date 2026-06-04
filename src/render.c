@@ -1,15 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*   render.c                                      cub3D / 42                */
-/*                                                                            */
-/*   Dessin de chaque frame dans le framebuffer.                              */
-/*                                                                            */
-/*   Pipeline par frame :                                                     */
-/*   game_loop() → render_frame() → pour chaque colonne :                     */
-/*     draw_ceiling_strip() + draw_wall_strip() + draw_floor_strip()          */
-/*   puis : mlx_put_image_to_window()                                         */
+/*                                                        :::      ::::::::   */
+/*   render.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/04 09:59:25 by miokrako          #+#    #+#             */
+/*   Updated: 2026/06/04 09:59:31 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../includes/cube3d.h"
 

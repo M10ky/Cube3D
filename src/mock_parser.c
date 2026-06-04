@@ -1,23 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*   mock_parser.c                                 cub3D / 42                */
-/*                                                                            */
-/*   SIMULATION DU PARSEUR — Remplace parse_cub_file() pendant le dev.       */
-/*                                                                            */
-/*   Ce fichier est la "prothèse" qui te permet de travailler sur le          */
-/*   raycasting SANS le parseur de ton binôme. Il remplit t_config avec       */
-/*   des données hardcodées qui passent dans les mêmes structs.               */
-/*                                                                            */
-/*   MERGER AVEC LE VRAI PARSEUR :                                            */
-/*   Dans main.c, remplace :                                                   */
-/*       if (init_mock_config(&game.config) != 0)  ← AVANT                   */
-/*   par :                                                                    */
-/*       if (parse_cub_file(&game.config, argv[1]) != 0)  ← APRÈS            */
-/*                                                                            */
-/*   Les deux fonctions ont la même signature et remplissent les mêmes        */
-/*   champs de t_config. Aucun autre fichier à modifier.                      */
+/*                                                        :::      ::::::::   */
+/*   mock_parser.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/29 20:39:02 by miokrako          #+#    #+#             */
+/*   Updated: 2026/06/04 10:00:53 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../includes/cube3d.h"
 
