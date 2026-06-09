@@ -6,7 +6,7 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/29 20:21:31 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/09 06:39:26 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/09 20:52:32 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int main(int argc, char **argv)
         return (print_error("Usage: ./cub3D <fichier.cub>"));
     (void)argv;   
 
-    memset(&game, 0, sizeof(t_game));
+    ft_memset(&game, 0, sizeof(t_game));
 
     if (init_game(&game) != 0)
         return (1);

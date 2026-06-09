@@ -6,7 +6,7 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/29 20:39:02 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/09 06:40:56 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/09 20:53:18 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ static int  setup_map(t_config *cfg)
     h = 0;
     while (g_mock_map[h] != NULL)
     {
-        cfg->map[h] = strdup(g_mock_map[h]);
+        cfg->map[h] = ft_strdup(g_mock_map[h]);
         if (!cfg->map[h])
             return (1);
-        len = (int)strlen(g_mock_map[h]);
+        len = (int)ft_strlen(g_mock_map[h]);
         if (len > w)
             w = len;
         h++;
@@ -72,10 +72,10 @@ static void setup_player(t_config *cfg)
 
 static int  setup_textures(t_config *cfg)
 {
-    cfg->tex_path[NORTH] = strdup("./textures/north.xpm");
-    cfg->tex_path[SOUTH] = strdup("./textures/south.xpm");
-    cfg->tex_path[EAST]  = strdup("./textures/east.xpm");
-    cfg->tex_path[WEST]  = strdup("./textures/west.xpm");
+    cfg->tex_path[NORTH] = ft_strdup("./textures/north.xpm");
+    cfg->tex_path[SOUTH] = ft_strdup("./textures/south.xpm");
+    cfg->tex_path[EAST]  = ft_strdup("./textures/east.xpm");
+    cfg->tex_path[WEST]  = ft_strdup("./textures/west.xpm");
     if (!cfg->tex_path[NORTH] || !cfg->tex_path[SOUTH]
         || !cfg->tex_path[EAST] || !cfg->tex_path[WEST])
         return (1);

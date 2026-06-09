@@ -6,16 +6,20 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/07 21:33:59 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/09 06:35:06 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/09 20:39:29 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../includes/cube3d.h"
+#include "../libft/libft.h"
 
 int     print_error(const char *msg)
 {
-    fprintf(stderr, "Error\n%s\n", msg);
+    // fprintf(stderr, "Error\n%s\n", msg);
+    write(2, "Error\n", 6);
+    write(2, msg, ft_strlen(msg));
+    write(2, "\n", 1);
     return (1);
 }
 

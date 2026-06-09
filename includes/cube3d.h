@@ -6,17 +6,20 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 19:47:24 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/09 06:33:35 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/09 21:00:09 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 # include <math.h>                                
-# include <stdio.h>                                      
+# include <stdio.h>  
+# include <unistd.h>                                      
 # include <stdlib.h>        
-# include <string.h>     //soloina libft   
-# include <mlx.h>           
+// # include <string.h>     //soloina libft   
+# include <mlx.h>    
+# include "../libft/libft.h"
+
 
 # define SCREEN_W    1024
 # define SCREEN_H    512
@@ -37,8 +40,8 @@
 
 
 # define KEY_ESC     65307
-# define KEY_Z       122
-# define KEY_Q       113
+# define KEY_W       119
+# define KEY_A       97
 # define KEY_S       115
 # define KEY_D       100
 # define KEY_LEFT    65361
@@ -130,9 +133,9 @@ typedef struct s_ray
 
 typedef struct s_keys
 {
-    int         z;          /* avancer                                        */
+    int         w;          /* avancer                                        */
     int         s;          /* reculer                                        */
-    int         q;          /* strafer gauche                                 */
+    int         a;          /* strafer gauche                                 */
     int         d;          /* strafer droite                                 */
     int         left;       /* rotation gauche                                */
     int         right;      /* rotation droite                                */

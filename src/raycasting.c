@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/09 06:41:13 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/09 06:44:08 by miokrako         ###   ########.fr       */
+/*   Created: 2026/05/30 06:41:13 by miokrako          #+#    #+#             */
+/*   Updated: 2026/06/09 21:23:40 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char map_safe(t_config *cfg, int x, int y)
 {
     if (y < 0 || y >= cfg->map_h || x < 0 || x >= cfg->map_w)
         return ('1');
-    if (x >= (int)strlen(cfg->map[y]))
+    if (x >= (int)ft_strlen(cfg->map[y]))
         return ('1');
     return (cfg->map[y][x]);
 }
@@ -27,7 +27,7 @@ static void init_ray(t_game *game, int col, t_ray *ray)
     t_player    *p;
 
     p = &game->player;
-    memset(ray, 0, sizeof(t_ray));
+    ft_memset(ray, 0, sizeof(t_ray));
 
     /* cam : [-1.0, +1.0] */
     ray->cam = 2.0 * col / (double)SCREEN_W - 1.0;
