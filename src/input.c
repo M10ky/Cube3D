@@ -6,11 +6,11 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/09 06:37:18 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/10 21:41:28 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/11 00:07:35 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cube3d.h"
+#include "../includes/cub3d.h"
 
 int	key_press(int keycode, void *param)
 {
@@ -36,7 +36,7 @@ int	key_press(int keycode, void *param)
 
 int	key_release(int keycode, void *param)
 {
-	t_game  *game;
+	t_game	*game;
 
 	game = (t_game *)param;
 	if (keycode == KEY_W)
@@ -56,13 +56,12 @@ int	key_release(int keycode, void *param)
 
 int	handle_close(void *param)
 {
-	t_game  *game;
+	t_game	*game;
 
 	game = (t_game *)param;
 	cleanup_exit(game);
 	return (0);
 }
-
 
 static	void	rotate_player(t_player *p, double angle)
 {

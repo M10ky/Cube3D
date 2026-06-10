@@ -6,12 +6,12 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/29 20:39:02 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/10 23:00:24 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/11 00:07:35 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#include "../includes/cube3d.h"
+#include "../includes/cub3d.h"
 
 static char *g_mock_map[] = {
     "111111111111111",   /* y=0  */
@@ -28,34 +28,34 @@ static char *g_mock_map[] = {
     NULL                 /* faranana am NULL                     */
 };
 
-static int  setup_map(t_config *cfg)
+static	int	setup_map(t_config *cfg)
 {
-    int     h;
-    int     w;
-    int     len;
+	int	h;
+	int	w;
+	int	len;
 
-    h = 0;
-    while (g_mock_map[h] != NULL)
-        h++;
-    cfg->map_h = h;
-    cfg->map = (char **)malloc(sizeof(char *) * (h + 1));
-    if (!cfg->map)
-        return (1);
-    w = 0;
-    h = 0;
-    while (g_mock_map[h] != NULL)
-    {
-        cfg->map[h] = ft_strdup(g_mock_map[h]);
-        if (!cfg->map[h])
-            return (1);
-        len = (int)ft_strlen(g_mock_map[h]);
-        if (len > w)
-            w = len;
-        h++;
-    }
-    cfg->map[h] = NULL;    /* terminateur NULL pour les boucles while */
-    cfg->map_w = w;
-    return (0);
+	h = 0;
+	while (g_mock_map[h] != NULL)
+		h++;
+	cfg->map_h = h;
+	cfg->map = (char **)malloc(sizeof(char *) * (h + 1));
+	if (!cfg->map)
+		return (1);
+	w = 0;
+	h = 0;
+	while (g_mock_map[h] != NULL)
+	{
+		cfg->map[h] = ft_strdup(g_mock_map[h]);
+		if (!cfg->map[h])
+			return (1);
+		len = (int)ft_strlen(g_mock_map[h]);
+		if (len > w)
+			w = len;
+		h++;
+	}
+	cfg->map[h] = NULL;
+	cfg->map_w = w;
+	return (0);
 }
 
 

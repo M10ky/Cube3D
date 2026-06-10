@@ -6,11 +6,11 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 23:35:19 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/10 22:44:55 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/11 00:07:35 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cube3d.h"
+#include "../includes/cub3d.h"
 
 void	put_pixel(t_img *buf, int x, int y, unsigned int color)
 {
@@ -21,7 +21,6 @@ void	put_pixel(t_img *buf, int x, int y, unsigned int color)
 	dst = buf->addr + y * buf->line_len + x * (buf->bpp / 8);
 	*(unsigned int *)dst = color;
 }
-
 
 static	int	init_mlx(t_game *game)
 {
@@ -40,7 +39,7 @@ static	int	init_framebuffer(t_game *game)
 	if (!game->buf.img)
 		return (print_error("mlx_new_image (framebuffer) failed"));
 	game->buf.addr = mlx_get_data_addr(game->buf.img, &game->buf.bpp,
-						&game->buf.line_len, &game->buf.endian);
+			&game->buf.line_len, &game->buf.endian);
 	if (!game->buf.addr)
 		return (print_error("mlx_get_data_addr (framebuffer) failed"));
 	return (0);
@@ -52,7 +51,7 @@ static	int	load_texture(t_game *game, int idx)
 
 	tex = &game->tex[idx];
 	tex->img = mlx_xpm_file_to_image(game->mlx, game->config.tex_path[idx],
-					&tex->width, &tex->height);
+			&tex->width, &tex->height);
 	if (!tex->img)
 	{
 		print_error("mlx_get_data_addr failed");
@@ -60,7 +59,7 @@ static	int	load_texture(t_game *game, int idx)
 		exit(1);
 	}
 	tex->addr = mlx_get_data_addr(tex->img, &tex->bpp,
-					&tex->line_len, &tex->endian);
+			&tex->line_len, &tex->endian);
 	return (0);
 }
 

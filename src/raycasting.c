@@ -6,12 +6,11 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/30 06:41:13 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/10 23:13:46 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/11 00:12:17 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include "../includes/cube3d.h"
+#include "../includes/cub3d.h"
 
 static	char	map_safe(t_config *cfg, int x, int y)
 {
@@ -71,7 +70,6 @@ static	void	init_dda(t_game *game, t_ray *ray)
 	(void)game;
 }
 
-
 static	void	do_dda(t_game *game, t_ray *ray)
 {
 	ray->hit = 0;
@@ -79,15 +77,15 @@ static	void	do_dda(t_game *game, t_ray *ray)
 	{
 		if (ray->side_x < ray->side_y)
 		{
-			ray->side_x += ray->delta_x;   /* next X-side aveo   */
-			ray->map_x  += ray->step_x;    /* entrer dans la cellule Est/Ouest */
-			ray->side = 0;                 /* mémoriser : X-side franchie    */
+			ray->side_x += ray->delta_x;
+			ray->map_x += ray->step_x;
+			ray->side = 0;
 		}
 		else
 		{
-			ray->side_y += ray->delta_y;   /* next Y-side aveo    */
-			ray->map_y  += ray->step_y;    /* entrer dans la cellule Nord/Sud */
-			ray->side = 1;                 /* mémoriser : Y-side franchie    */
+			ray->side_y += ray->delta_y;
+			ray->map_y += ray->step_y;
+			ray->side = 1;
 		}
 		if (map_safe(&game->config, ray->map_x, ray->map_y) == '1')
 			ray->hit = 1;
@@ -96,11 +94,10 @@ static	void	do_dda(t_game *game, t_ray *ray)
 
 static	void	calc_wall(t_game *game, t_ray *ray)
 {
-	double  wall_hit;
-	t_player *p;
+	double		wall_hit;
+	t_player	*p;
 
 	p = &game->player;
-	/* ─ fisheye ── */
 	if (ray->side == 0)
 		ray->wall_dist = ray->side_x - ray->delta_x;
 	else
@@ -115,9 +112,19 @@ static	void	calc_wall(t_game *game, t_ray *ray)
 	if (ray->draw_y1 >= SCREEN_H)
 		ray->draw_y1 = SCREEN_H - 1;
 	if (ray->side == 0)
-		ray->face = (ray->step_x > 0) ? EAST : WEST;
+	{
+		if (ray->step_x > 0)
+			ray->face = EAST;
+		else
+			ray->face = WEST;
+	}
 	else
-		ray->face = (ray->step_y > 0) ? SOUTH : NORTH;
+	{
+		if (ray->step_y > 0)
+			ray->face = SOUTH;
+		else
+			ray->face = NORTH;
+	}
 	if (ray->side == 0)
 		wall_hit = p->pos_y + ray->wall_dist * ray->dir_y;
 	else
@@ -128,7 +135,6 @@ static	void	calc_wall(t_game *game, t_ray *ray)
 		ray->tex_x = TEX_W - ray->tex_x - 1;
 	if (ray->side == 1 && ray->dir_y < 0.0)
 		ray->tex_x = TEX_W - ray->tex_x - 1;
-
 	if (ray->tex_x < 0)
 		ray->tex_x = 0;
 	if (ray->tex_x >= TEX_W)

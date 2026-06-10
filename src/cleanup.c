@@ -6,11 +6,11 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/07 21:33:59 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/10 21:34:24 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/11 00:07:34 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cube3d.h"
+#include "../includes/cub3d.h"
 
 int	print_error(const char *msg)
 {
@@ -57,7 +57,7 @@ static	void	free_map(t_config *cfg)
 	cfg->map = NULL;
 }
 
-static	void free_mlx_context(t_game *game)
+static	void	free_mlx_context(t_game *game)
 {
 	if (game->win)
 	{
