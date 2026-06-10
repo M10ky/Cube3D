@@ -6,7 +6,7 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/29 20:21:31 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/09 20:52:32 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/10 20:36:13 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int main(int argc, char **argv)
 
     if (argc != 2)
         return (print_error("Usage: ./cub3D <fichier.cub>"));
-    (void)argv;   
+    (void)argv;
 
     ft_memset(&game, 0, sizeof(t_game));
 
@@ -31,7 +31,6 @@ int main(int argc, char **argv)
     mlx_hook(game.win, EVT_CLOSE,       0,       handle_close, &game);
     mlx_loop_hook(game.mlx,                      game_loop,    &game);
 
-   
     mlx_loop(game.mlx);
 
 
