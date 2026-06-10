@@ -6,7 +6,7 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/30 06:41:13 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/10 23:01:10 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/10 23:13:46 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,59 +94,51 @@ static	void	do_dda(t_game *game, t_ray *ray)
 	}
 }
 
-
 static	void	calc_wall(t_game *game, t_ray *ray)
 {
-    double  wall_hit;
-    t_player *p;
+	double  wall_hit;
+	t_player *p;
 
-    p = &game->player;
+	p = &game->player;
+	/* ─ fisheye ── */
+	if (ray->side == 0)
+		ray->wall_dist = ray->side_x - ray->delta_x;
+	else
+		ray->wall_dist = ray->side_y - ray->delta_y;
+	if (ray->wall_dist < 0.001)
+		ray->wall_dist = 0.001;
+	ray->line_h = (int)(SCREEN_H / ray->wall_dist);
+	ray->draw_y0 = SCREEN_H / 2 - ray->line_h / 2;
+	if (ray->draw_y0 < 0)
+		ray->draw_y0 = 0;
+	ray->draw_y1 = SCREEN_H / 2 + ray->line_h / 2;
+	if (ray->draw_y1 >= SCREEN_H)
+		ray->draw_y1 = SCREEN_H - 1;
+	if (ray->side == 0)
+		ray->face = (ray->step_x > 0) ? EAST : WEST;
+	else
+		ray->face = (ray->step_y > 0) ? SOUTH : NORTH;
+	if (ray->side == 0)
+		wall_hit = p->pos_y + ray->wall_dist * ray->dir_y;
+	else
+		wall_hit = p->pos_x + ray->wall_dist * ray->dir_x;
+	wall_hit -= floor(wall_hit);
+	ray->tex_x = (int)(wall_hit * TEX_W);
+	if (ray->side == 0 && ray->dir_x > 0.0)
+		ray->tex_x = TEX_W - ray->tex_x - 1;
+	if (ray->side == 1 && ray->dir_y < 0.0)
+		ray->tex_x = TEX_W - ray->tex_x - 1;
 
-    /* ─ fisheye ── */
-    if (ray->side == 0)
-        ray->wall_dist = ray->side_x - ray->delta_x;
-    else
-        ray->wall_dist = ray->side_y - ray->delta_y;
-
-    if (ray->wall_dist < 0.001)
-        ray->wall_dist = 0.001;
-
-    ray->line_h = (int)(SCREEN_H / ray->wall_dist);
-
-    ray->draw_y0 = SCREEN_H / 2 - ray->line_h / 2;
-    if (ray->draw_y0 < 0)
-        ray->draw_y0 = 0;
-    ray->draw_y1 = SCREEN_H / 2 + ray->line_h / 2;
-    if (ray->draw_y1 >= SCREEN_H)
-        ray->draw_y1 = SCREEN_H - 1;
-
-    if (ray->side == 0)
-        ray->face = (ray->step_x > 0) ? EAST : WEST;
-    else
-        ray->face = (ray->step_y > 0) ? SOUTH : NORTH;
-
-    if (ray->side == 0)
-        wall_hit = p->pos_y + ray->wall_dist * ray->dir_y;
-    else
-        wall_hit = p->pos_x + ray->wall_dist * ray->dir_x;
-    wall_hit -= floor(wall_hit);            /* partie fractionnaire [0, 1) */
-    ray->tex_x = (int)(wall_hit * TEX_W);
-
-    if (ray->side == 0 && ray->dir_x > 0.0)
-        ray->tex_x = TEX_W - ray->tex_x - 1;
-    if (ray->side == 1 && ray->dir_y < 0.0)
-        ray->tex_x = TEX_W - ray->tex_x - 1;
-
-    if (ray->tex_x < 0)
-        ray->tex_x = 0;
-    if (ray->tex_x >= TEX_W)
-        ray->tex_x = TEX_W - 1;
+	if (ray->tex_x < 0)
+		ray->tex_x = 0;
+	if (ray->tex_x >= TEX_W)
+		ray->tex_x = TEX_W - 1;
 }
 
-void    cast_ray(t_game *game, int col, t_ray *ray)
+void	cast_ray(t_game *game, int col, t_ray *ray)
 {
-    init_ray(game, col, ray);
-    init_dda(game, ray);
-    do_dda(game, ray);
-    calc_wall(game, ray);
+	init_ray(game, col, ray);
+	init_dda(game, ray);
+	do_dda(game, ray);
+	calc_wall(game, ray);
 }

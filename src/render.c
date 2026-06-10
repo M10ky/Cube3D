@@ -6,7 +6,7 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 09:59:25 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/10 22:46:19 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/10 23:14:00 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,19 +89,19 @@ static void draw_column(t_game *game, int col, t_ray *ray)
     draw_floor_strip(game, col, ray->draw_y1 + 1);    /* draw_y1+1 → fin    */
 }
 
-void    render_frame(t_game *game)
+void	render_frame(t_game *game)
 {
-    t_ray   ray;
-    int     col;
+	t_ray	ray;
+	int		col;
 
-    col = 0;
-    while (col < SCREEN_W)
-    {
-        cast_ray(game, col, &ray);
-        draw_column(game, col, &ray);
-        col++;
+	col = 0;
+	while (col < SCREEN_W)
+	{
+		cast_ray(game, col, &ray);
+		draw_column(game, col, &ray);
+		col++;
     }
-    mlx_put_image_to_window(game->mlx, game->win, game->buf.img, 0, 0);
+	mlx_put_image_to_window(game->mlx, game->win, game->buf.img, 0, 0);
 }
 
 
