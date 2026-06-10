@@ -6,18 +6,18 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 19:47:24 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/09 21:00:09 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/10 23:04:40 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
-# include <math.h>                                
-# include <stdio.h>  
-# include <unistd.h>                                      
-# include <stdlib.h>        
-// # include <string.h>     //soloina libft   
-# include <mlx.h>    
+# include <math.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
+// # include <string.h>     //soloina libft
+# include <mlx.h>
 # include "../libft/libft.h"
 
 
@@ -29,8 +29,8 @@
 # define TEX_H       64
 
 
-# define MOV_SPD     0.05
-# define ROT_SPD     0.030
+# define MOV_SPD     0.03
+# define ROT_SPD     0.01
 
 
 # define NORTH       0
@@ -61,8 +61,8 @@ typedef struct s_config
     int         ceil_color;     /* "C 225,30,0"  → 0x00E11E00           */
 
     char        **map;
-    int         map_h;     
-    int         map_w;         
+    int         map_h;
+    int         map_w;
 
     double      spawn_x;        /* position X voloany (centre de cellule)    */
     double      spawn_y;        /* position Y voloany                        */
@@ -81,7 +81,7 @@ typedef struct s_texture
     int         line_len;
     int         endian;
     int         width;
-    int         height;    
+    int         height;
 }   t_texture;
 
 
@@ -128,7 +128,7 @@ typedef struct s_ray
     int         draw_y0;
     int         draw_y1;
     int         face;
-    int         tex_x;      
+    int         tex_x;
 }   t_ray;
 
 typedef struct s_keys

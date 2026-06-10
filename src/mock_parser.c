@@ -6,7 +6,7 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/29 20:39:02 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/10 20:37:30 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/10 23:00:24 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,22 +59,21 @@ static int  setup_map(t_config *cfg)
 }
 
 
-static void setup_player(t_config *cfg)
+static	void	setup_player(t_config *cfg)
 {
-    cfg->spawn_x = 7.5;          /* centre de la cellule map[5][7]           */
-    cfg->spawn_y = 5.5;
-    cfg->spawn_dir_x = 0.0;      /* face au NORD : dir_x = 0                 */
-    cfg->spawn_dir_y = -1.0;     /* face au NORD : dir_y = -1 (Y décroît)    */
-    cfg->spawn_plane_x = 0.66;   /* plan FOV ≈ 66°   */
-    cfg->spawn_plane_y = 0.0;
+	cfg->spawn_x = 7;
+	cfg->spawn_y = 5.5;
+	cfg->spawn_dir_x = 0.0;
+	cfg->spawn_dir_y = -1.0;
+	cfg->spawn_plane_x = 0.66;
+	cfg->spawn_plane_y = 0.0;
 }
 
-
-static int  setup_textures(t_config *cfg)
+static	int	setup_textures(t_config *cfg)
 {
     cfg->tex_path[NORTH] = ft_strdup("./textures/1.xpm");
     cfg->tex_path[SOUTH] = ft_strdup("./textures/5.xpm");
-    cfg->tex_path[EAST]  = ft_strdup("./textures/3ghd.xpm");
+    cfg->tex_path[EAST]  = ft_strdup("./textures/3.xpm");
     cfg->tex_path[WEST]  = ft_strdup("./textures/4.xpm");
     if (!cfg->tex_path[NORTH] || !cfg->tex_path[SOUTH]
         || !cfg->tex_path[EAST] || !cfg->tex_path[WEST])
@@ -82,22 +81,21 @@ static int  setup_textures(t_config *cfg)
     return (0);
 }
 
-
-static void setup_colors(t_config *cfg)
+static	void	setup_colors(t_config *cfg)
 {
-    cfg->floor_color = (100 << 16) | (80 << 8) | 50;    /* 0x00645032       */
+	cfg->floor_color = (100 << 16) | (80 << 8) | 50;
 
-    cfg->ceil_color  = (60 << 16) | (120 << 8) | 200;   /* 0x003C78C8       */
+	cfg->ceil_color = (60 << 16) | (120 << 8) | 200;
 }
 
 
 int	init_mock_config(t_config *cfg)
 {
 	setup_player(cfg);
-    setup_colors(cfg);
-    if (setup_textures(cfg) != 0)
-        return (print_error("Mock: failed to duplicate texture paths"));
-    if (setup_map(cfg) != 0)
-        return (print_error("Mock: failed to duplicate map"));
-    return (0);
+	setup_colors(cfg);
+	if (setup_textures(cfg) != 0)
+		return (print_error("Mock: failed to duplicate texture paths"));
+	if (setup_map(cfg) != 0)
+		return (print_error("Mock: failed to duplicate map"));
+	return (0);
 }

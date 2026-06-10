@@ -6,101 +6,96 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/30 06:41:13 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/09 21:23:40 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/10 23:01:10 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../includes/cube3d.h"
 
-static char map_safe(t_config *cfg, int x, int y)
+static	char	map_safe(t_config *cfg, int x, int y)
 {
-    if (y < 0 || y >= cfg->map_h || x < 0 || x >= cfg->map_w)
-        return ('1');
-    if (x >= (int)ft_strlen(cfg->map[y]))
-        return ('1');
-    return (cfg->map[y][x]);
+	if (y < 0 || y >= cfg->map_h || x < 0 || x >= cfg->map_w)
+		return ('1');
+	if (x >= (int)ft_strlen(cfg->map[y]))
+		return ('1');
+	return (cfg->map[y][x]);
 }
 
-static void init_ray(t_game *game, int col, t_ray *ray)
+static	void	init_ray(t_game *game, int col, t_ray *ray)
 {
-    t_player    *p;
+	t_player	*p;
 
-    p = &game->player;
-    ft_memset(ray, 0, sizeof(t_ray));
-
-    /* cam : [-1.0, +1.0] */
-    ray->cam = 2.0 * col / (double)SCREEN_W - 1.0;
-
-    /* Direction du rayon = vecteur direction + fraction du plan caméra */
-    ray->dir_x = p->dir_x + p->plane_x * ray->cam;
-    ray->dir_y = p->dir_y + p->plane_y * ray->cam;
-
-    /* Cellule de départ = cellule contenant le joueur */
-    ray->map_x = (int)p->pos_x;
-    ray->map_y = (int)p->pos_y;
+	p = &game->player;
+	ft_memset(ray, 0, sizeof(t_ray));
+	ray->cam = 2.0 * col / (double)SCREEN_W - 1.0;
+	ray->dir_x = p->dir_x + p->plane_x * ray->cam;
+	ray->dir_y = p->dir_y + p->plane_y * ray->cam;
+	ray->map_x = (int)p->pos_x;
+	ray->map_y = (int)p->pos_y;
 }
 
-
-static void init_dda(t_game *game, t_ray *ray)
+static	void	init_dda(t_game *game, t_ray *ray)
 {
-    t_player    *p;
+	t_player	*p;
 
-    p = &game->player;
-
-    ray->delta_x = (ray->dir_x == 0.0) ? 1e30 : fabs(1.0 / ray->dir_x);
-    ray->delta_y = (ray->dir_y == 0.0) ? 1e30 : fabs(1.0 / ray->dir_y);
-
-    if (ray->dir_x < 0.0)
-    {
-        ray->step_x = -1;                                    /* va vers la gauche (Ouest) */
-        ray->side_x = (p->pos_x - ray->map_x) * ray->delta_x; /* dist jusqu'à x=map_x */
-    }
-    else
-    {
-        ray->step_x = 1;                                     /* va vers la droite (Est) */
-        ray->side_x = (ray->map_x + 1.0 - p->pos_x) * ray->delta_x; /* dist jusqu'à x=map_x+1 */
-    }
-
-    if (ray->dir_y < 0.0)
-    {
-        ray->step_y = -1;                                    /* va vers le haut (Nord) */
-        ray->side_y = (p->pos_y - ray->map_y) * ray->delta_y; /* dist jusqu'à y=map_y */
-    }
-    else
-    {
-        ray->step_y = 1;                                     /* va vers le bas (Sud) */
-        ray->side_y = (ray->map_y + 1.0 - p->pos_y) * ray->delta_y; /* dist jusqu'à y=map_y+1 */
-    }
-    (void)game;
-}
-
-static void do_dda(t_game *game, t_ray *ray)
-{
-    ray->hit = 0;
-    while (ray->hit == 0)
-    {
-        /* Avancer vers la frontière la plus proche */
-        if (ray->side_x < ray->side_y)
-        {
-            ray->side_x += ray->delta_x;   /* next X-side aveo   */
-            ray->map_x  += ray->step_x;    /* entrer dans la cellule Est/Ouest */
-            ray->side = 0;                 /* mémoriser : X-side franchie    */
-        }
-        else
-        {
-            ray->side_y += ray->delta_y;   /* next Y-side aveo    */
-            ray->map_y  += ray->step_y;    /* entrer dans la cellule Nord/Sud */
-            ray->side = 1;                 /* mémoriser : Y-side franchie    */
-        }
-        /* if on vient d'entrer dans un mur */
-        if (map_safe(&game->config, ray->map_x, ray->map_y) == '1')
-            ray->hit = 1;
-    }
+	p = &game->player;
+	if (ray->dir_x == 0.0)
+		ray->delta_x = 1e30;
+	else
+		ray->delta_x = fabs(1.0 / ray->dir_x);
+	if (ray->dir_y == 0.0)
+		ray->delta_y = 1e30;
+	else
+		ray->delta_y = fabs(1.0 / ray->dir_y);
+	if (ray->dir_x < 0.0)
+	{
+		ray->step_x = -1;
+		ray->side_x = (p->pos_x - ray->map_x) * ray->delta_x;
+	}
+	else
+	{
+		ray->step_x = 1;
+		ray->side_x = (ray->map_x + 1.0 - p->pos_x) * ray->delta_x;
+	}
+	if (ray->dir_y < 0.0)
+	{
+		ray->step_y = -1;
+		ray->side_y = (p->pos_y - ray->map_y) * ray->delta_y;
+	}
+	else
+	{
+		ray->step_y = 1;
+		ray->side_y = (ray->map_y + 1.0 - p->pos_y) * ray->delta_y;
+	}
+	(void)game;
 }
 
 
-static void calc_wall(t_game *game, t_ray *ray)
+static	void	do_dda(t_game *game, t_ray *ray)
+{
+	ray->hit = 0;
+	while (ray->hit == 0)
+	{
+		if (ray->side_x < ray->side_y)
+		{
+			ray->side_x += ray->delta_x;   /* next X-side aveo   */
+			ray->map_x  += ray->step_x;    /* entrer dans la cellule Est/Ouest */
+			ray->side = 0;                 /* mémoriser : X-side franchie    */
+		}
+		else
+		{
+			ray->side_y += ray->delta_y;   /* next Y-side aveo    */
+			ray->map_y  += ray->step_y;    /* entrer dans la cellule Nord/Sud */
+			ray->side = 1;                 /* mémoriser : Y-side franchie    */
+		}
+		if (map_safe(&game->config, ray->map_x, ray->map_y) == '1')
+			ray->hit = 1;
+	}
+}
+
+
+static	void	calc_wall(t_game *game, t_ray *ray)
 {
     double  wall_hit;
     t_player *p;

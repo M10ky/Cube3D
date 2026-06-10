@@ -6,7 +6,7 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 09:59:25 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/09 21:22:17 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/10 22:46:19 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static unsigned int sample_texture(t_texture *tex, int tx, int ty)
     char *pixel;
 
     if (!tex || !tex->addr)
-        return (0x00FF00FF);
+        return (1);
     pixel = tex->addr + ty * tex->line_len + tx * (tex->bpp / 8);
     return (*(unsigned int *)pixel);
 }
@@ -73,8 +73,8 @@ static void draw_wall_strip(t_game *game, int col, t_ray *ray)
         color = sample_texture(tex, ray->tex_x, tex_y);
 
         /* maloka y (Nord/Sud)      */
-        if (ray->side == 1)
-            color = (color >> 1) & 0x7F7F7F;
+        // if (ray->side == 1)
+        //     color = (color >> 1) & 0x7F7F7F;
 
         put_pixel(&game->buf, col, y, color);
         y++;
@@ -105,12 +105,12 @@ void    render_frame(t_game *game)
 }
 
 
-int     game_loop(void *param)
+int	game_loop(void *param)
 {
-    t_game  *game;
+	t_game  *game;
 
-    game = (t_game *)param;
-    handle_input(game);
-    render_frame(game);
-    return (0);
+	game = (t_game *)param;
+	handle_input(game);
+	render_frame(game);
+	return (0);
 }
