@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_for_map.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonandri <jonandri@student.42antananari    +#+  +:+       +#+        */
+/*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/29 18:03:31 by jonandri          #+#    #+#             */
-/*   Updated: 2026/06/14 20:30:12 by jonandri         ###   ########.fr       */
+/*   Updated: 2026/06/17 20:36:51 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

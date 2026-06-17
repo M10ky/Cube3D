@@ -6,7 +6,7 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 19:47:24 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/17 19:43:46 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/17 21:40:40 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ typedef struct s_player
     double      dir_y;      /* direction Y                                    */
     double      plane_x;    /* plan caméra X (perpendiculaire à dir)          */
     double      plane_y;    /* plan caméra Y                                  */
+    double	    move_speed;
+	double	    rot_speed;
 }   t_player;
 
 
@@ -155,6 +157,7 @@ typedef struct s_game
 
 
 int     init_mock_config(t_config *config, t_map *map);
+void	cleanup_mock_config(t_config *cfg);
 
 int     init_game(t_game *game, t_map *map);
 void    init_player(t_game *game);

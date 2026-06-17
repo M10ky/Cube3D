@@ -6,106 +6,205 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/29 20:39:02 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/15 22:24:00 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/17 xx:xx:xx by Grok              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../includes/cub3d.h"
 #include "../header/cube.h"
 
-// static char *g_mock_map[] = {
-//     "111111111111111",   /* y=0  */
-//     "100000001000001",   /* y=1  */
-//     "100110001000001",   /* y=2  */
-//     "100110000000001",   /* y=3  */
-//     "100000000000001",   /* y=4  */
-//     "100000000111001",   /* y=5  */
-//     "100000001000001",   /* y=6  */
-//     "100000001000001",   /* y=7  */
-//     "100000001111001",   /* y=8  */
-//     "100000000000001",   /* y=9  */
-//     "111111111111111",   /* y=10 */
-//     NULL                 /* faranana am NULL                     */
-// };
-
-static	int	setup_map(t_config *cfg, t_map *map)
+static void	free_mock_textures(t_config *cfg)
 {
-	int	h;
-	int	w;
-	int	len;
+	int	i;
 
-	h = 0;
-	while (map->true_grid[h] != NULL)
-		h++;
-	cfg->map_h = h;
-	cfg->map = (char **)malloc(sizeof(char *) * (h + 1));
-	if (!cfg->map)
-		return (1);
-	w = 0;
-	h = 0;
-	while (map->true_grid[h] != NULL)
+	if (!cfg)
+		return ;
+	i = 0;
+	while (i < 4)
 	{
-		cfg->map[h] = ft_strdup(map->true_grid[h]);
-		if (!cfg->map[h])
-			return (1);
-		len = (int)ft_strlen(map->true_grid[h]);
-		if (len > w)
-			w = len;
-		h++;
+		if (cfg->tex_path[i])
+		{
+			free(cfg->tex_path[i]);
+			cfg->tex_path[i] = NULL;
+		}
+		i++;
 	}
-	cfg->map[h] = NULL;
-	cfg->map_w = w;
+}
+
+// static void	free_mock_map(t_config *cfg)
+// {
+// 	int	i;
+
+// 	if (!cfg || !cfg->map)
+// 		return ;
+// 	i = 0;
+// 	while (cfg->map[i])
+// 	{
+// 		free(cfg->map[i]);
+// 		cfg->map[i] = NULL;
+// 		i++;
+// 	}
+// 	free(cfg->map);
+// 	cfg->map = NULL;
+// }
+
+// void	cleanup_mock_config(t_config *cfg)
+// {
+// 	if (!cfg)
+// 		return ;
+// 	free_mock_textures(cfg);
+// 	free_mock_map(cfg);
+// }
+
+
+static void	setup_direction(t_config *cfg, char dir)
+{
+	if (dir == 'N')
+	{
+		cfg->spawn_dir_x = -1.0;
+		cfg->spawn_dir_y = 0.0;
+		cfg->spawn_plane_x = 0.0;
+		cfg->spawn_plane_y = 0.66;
+	}
+	else if (dir == 'S')
+	{
+		cfg->spawn_dir_x = 1.0;
+		cfg->spawn_dir_y = 0.0;
+		cfg->spawn_plane_x = 0.0;
+		cfg->spawn_plane_y = -0.66;
+	}
+	else if (dir == 'E')
+	{
+		cfg->spawn_dir_x = 0.0;
+		cfg->spawn_dir_y = 1.0;
+		cfg->spawn_plane_x = -0.66;
+		cfg->spawn_plane_y = 0.0;
+	}
+	else if (dir == 'W')
+	{
+		cfg->spawn_dir_x = 0.0;
+		cfg->spawn_dir_y = -1.0;
+		cfg->spawn_plane_x = 0.66;
+		cfg->spawn_plane_y = 0.0;
+	}
+}
+
+
+static int	setup_player(t_config *cfg, t_map *map)
+{
+	if (!map || map->pos_x < 0 || map->pos_y < 0 || !map->has_dir)
+		return (1);
+
+	/* Position centrée dans la case */
+	cfg->spawn_x = map->pos_x + 0.5;
+	cfg->spawn_y = map->pos_y + 0.5;
+
+	setup_direction(cfg, map->dir);
+
 	return (0);
 }
 
 
-static	void	setup_player(t_config *cfg, t_map *map)
+static int	setup_textures(t_config *cfg, t_map *map)
 {
-	cfg->spawn_x = map->pos_x;
-	cfg->spawn_y = map->pos_y;
+	int	i;
 
-	printf("\n x = %f et y = %f \n", cfg->spawn_x, cfg->spawn_y);
-	cfg->spawn_dir_x = 0.0;
-	cfg->spawn_dir_y = 1.0;
-	cfg->spawn_plane_x = 0.66;
-	cfg->spawn_plane_y = 0.0;
+	ft_memset(cfg->tex_path, 0, sizeof(cfg->tex_path));
+
+	if (!map->no_path || !map->so_path || !map->we_path || !map->ea_path)
+		return (1);
+
+	cfg->tex_path[NORTH] = ft_strdup(map->no_path);
+	cfg->tex_path[SOUTH] = ft_strdup(map->so_path);
+	cfg->tex_path[EAST]  = ft_strdup(map->ea_path);
+	cfg->tex_path[WEST]  = ft_strdup(map->we_path);
+
+	i = 0;
+	while (i < 4)
+	{
+		if (!cfg->tex_path[i])
+		{
+			free_mock_textures(cfg);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
 }
 
-static	int	setup_textures(t_config *cfg, t_map *map)
-{
-    cfg->tex_path[NORTH] = map->no_path;
-    cfg->tex_path[SOUTH] = map->so_path;
-    cfg->tex_path[EAST]  = map->ea_path;
-    cfg->tex_path[WEST]  = map->we_path;
-    if (!cfg->tex_path[NORTH] || !cfg->tex_path[SOUTH]
-        || !cfg->tex_path[EAST] || !cfg->tex_path[WEST])
-        return (1);
-    return (0);
-}
-
-static	void	setup_colors(t_config *cfg, t_map *map)
+static void	setup_colors(t_config *cfg, t_map *map)
 {
 	cfg->floor_color = map->floor_c;
-	cfg->ceil_color = map->ceiling_c;
+	cfg->ceil_color  = map->ceiling_c;
 }
 
+static int	setup_map(t_config *cfg, t_map *map)
+{
+	int	h;
+	int	i;
+	int	len;
+	int	max_w;
+
+	if (!map || !map->true_grid || map->height <= 0)
+		return (1);
+
+	/* Calcul hauteur */
+	h = 0;
+	while (map->true_grid[h])
+		h++;
+	cfg->map_h = h;
+
+	cfg->map = malloc(sizeof(char *) * (h + 1));
+	if (!cfg->map)
+		return (1);
+
+	max_w = 0;
+	i = 0;
+	while (i < h)
+	{
+		cfg->map[i] = ft_strdup(map->true_grid[i]);
+		if (!cfg->map[i])
+		{
+			while (--i >= 0)
+				free(cfg->map[i]);
+			free(cfg->map);
+			cfg->map = NULL;
+			return (1);
+		}
+		len = (int)ft_strlen(map->true_grid[i]);
+		if (len > max_w)
+			max_w = len;
+		i++;
+	}
+	cfg->map[h] = NULL;
+	cfg->map_w = max_w;
+
+	return (0);
+}
 
 int	init_mock_config(t_config *cfg, t_map *map)
 {
-	setup_player(cfg, map);
-	setup_colors(cfg, map);
-	if (setup_textures(cfg, map) != 0)
-		return (print_error("Mock: failed to duplicate texture paths"));
-	if (setup_map(cfg, map) != 0)
-		return (print_error("Mock: failed to duplicate map"));
-	// cfg->map = map->true_grid;
+	if (!cfg || !map)
+		return (print_error("Mock: invalid parameters"));
 
-	// for (int y = 0; y < 5; y++)
-	// {
-	// 	for (int x = 0; x < 5; x++)
-	// 		printf("%d", map->true_grid[y][x]);
-	// 	printf("\n");
-	// }
+	ft_memset(cfg, 0, sizeof(t_config));
+
+	if (setup_player(cfg, map) != 0)
+		return (print_error("Mock: invalid player position or direction"));
+
+	setup_colors(cfg, map);
+
+	if (setup_textures(cfg, map) != 0)
+	{
+		cleanup_mock_config(cfg);
+		return (print_error("Mock: failed to duplicate texture paths"));
+	}
+
+	if (setup_map(cfg, map) != 0)
+	{
+		cleanup_mock_config(cfg);
+		return (print_error("Mock: failed to duplicate map"));
+	}
+
 	return (0);
 }
