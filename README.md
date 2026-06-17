@@ -1,0 +1,2 @@
+CUbe3D est un projet dédié à la création et à la visualisation d’objets en 3D. Il offre une interface intuitive permettant de concevoir, manipuler et explorer des modèles en temps réel, pour stimuler la créativité et faciliter le design.
+  

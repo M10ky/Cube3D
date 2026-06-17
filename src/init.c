@@ -6,7 +6,7 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/01 23:35:19 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/11 00:07:35 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/15 22:00:48 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ void	init_player(t_game *game)
 	p->plane_y = cfg->spawn_plane_y;
 }
 
-int	init_game(t_game *game)
+int	init_game(t_game *game, t_map *map)
 {
-	if (init_mock_config(&game->config) != 0)
+	if (init_mock_config(&game->config, map) != 0)
 		return (1);
 	if (init_mlx(game) != 0)
 		return (1);

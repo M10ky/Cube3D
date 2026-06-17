@@ -1,53 +1,66 @@
-NAME = cub3D
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2026/04/16 12:01:50 by jonandri          #+#    #+#              #
+#    Updated: 2026/06/15 22:01:41 by miokrako         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-INCDIR = includes
-MLXDIR = minilibx-linux
-LIBFTDIR = libft
+NAME = cube3D
 
-SRCS = src/cleanup.c \
-       src/init.c \
-       src/input.c \
-       src/main.c \
-       src/mock_parser.c \
-       src/raycasting.c \
-       src/render.c
+SRCS = main.c sources/pixel_utils.c sources/read_files.c sources/map_init.c sources/get_next_line.c \
+	sources/get_next_line_utils.c sources/parse_utils.c sources/parse_color.c sources/map_parsing.c \
+	sources/strlen.c sources/utils_for_map.c sources/flood.c sources/verify_flood.c \
+	src/cleanup.c \
+    src/init.c \
+    src/input.c \
+    src/mock_parser.c \
+    src/raycasting.c \
+    src/render.c
 
 OBJS = $(SRCS:.c=.o)
 
-MLX_LIB = $(MLXDIR)/libmlx.a
-MLX_FLAGS = -L$(MLXDIR) -lmlx -lXext -lX11 -lm
+MLX_PATH = minilibx-linux
+LIBFT_PATH = Libft
+LIBFT = $(LIBFT_PATH)/libft.a
 
-LIBFT = $(LIBFTDIR)/libft.a
-LIBFT_FLAGS = -L$(LIBFTDIR) -lft
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -g
 
-INCLUDES = -I $(INCDIR) -I $(MLXDIR) -I $(LIBFTDIR)
+HEADER = -I$(MLX_PATH) -I./header -I$(LIBFT_PATH)
 
+MLX_FLAG = -L$(MLX_PATH) -lmlx -lXext -lX11 -lm
+
+RM = rm -f
 
 all: $(NAME)
 
-$(NAME): $(MLX_LIB) $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $(OBJS) $(LIBFT_FLAGS) $(MLX_FLAGS)
-
-$(MLX_LIB):
-	make -C $(MLXDIR)
+%.o: %.c
+	$(CC) $(CFLAGS) $(HEADER) -c $< -o $@
 
 $(LIBFT):
-	make -C $(LIBFTDIR)
+	$(MAKE) -C $(LIBFT_PATH)
 
-%.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+$(MLX_PATH)/libmlx.a:
+	$(MAKE) -C $(MLX_PATH)
+
+$(NAME): $(OBJS) $(LIBFT) $(MLX_PATH)/libmlx.a
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX_FLAG) -o $(NAME)
 
 clean:
-	rm -f $(OBJS)
-	make -C $(MLXDIR) clean
-	make -C $(LIBFTDIR) clean
+	$(RM) $(OBJS)
+	$(MAKE) -C $(MLX_PATH) clean
+	$(MAKE) -C $(LIBFT_PATH) clean
 
 fclean: clean
-	rm -f $(NAME)
-	make -C $(LIBFTDIR) fclean
+	$(RM) $(NAME)
+	$(MAKE) -C $(LIBFT_PATH) fclean
 
 re: fclean all
 
 .PHONY: all clean fclean re
+
