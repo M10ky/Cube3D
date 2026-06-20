@@ -6,7 +6,7 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/07 21:33:59 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/20 11:13:59 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/20 11:33:49 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,9 +124,14 @@ void	cleanup(t_game *game)
 		return ;
 
 	free_textures(game);
-	// free_map(&game->config);
 	cleanup_mock_config(&game->config);   /* sécurité supplémentaire */
 	free_mlx_context(game);
+	if (game->map)
+	{
+		free_all(game->map);
+		free_map(game->map);
+		game->map = NULL;
+	}
 
 	/* Remettre à zéro les structures principales */
 	ft_memset(&game->config, 0, sizeof(t_config));

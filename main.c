@@ -6,7 +6,7 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/26 09:54:22 by jonandri          #+#    #+#             */
-/*   Updated: 2026/06/20 10:35:46 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/20 11:34:54 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	free_all(t_map *map)
 {
 	int	i;
 
+	if (!map)
+		return ;
 	if (map->no_path)
 	{
 		free(map->no_path);
@@ -54,11 +56,12 @@ void	free_all(t_map *map)
 		i = 0;
 		while (map->grid[i] != NULL)
 		{
-			if (map->true_grid[i])
-				free(map->grid[i]);
+			free(map->grid[i]);
 			i++;
 		}
 		free(map->grid);
+		map->grid = NULL;
+		map->true_grid = NULL;
 	}
 }
 

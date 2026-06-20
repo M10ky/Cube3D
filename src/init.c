@@ -6,7 +6,7 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 11:12:42 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/20 11:14:06 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/20 11:34:12 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,26 +106,15 @@ void	init_player(t_game *game)
 int	init_game(t_game *game, t_map *map)
 {
 	ft_memset(game, 0, sizeof(t_game));
+	game->map = map;
 	if (init_mock_config(&game->config, map) != 0)
-	{
-		cleanup_mock_config(&game->config);
-		return (1);
-	}
+		return (cleanup(game), 1);
 	if (init_mlx(game) != 0)
-	{
-		cleanup_mock_config(&game->config);
-		return (1);
-	}
+		return (cleanup(game), 1);
 	if (init_framebuffer(game) != 0)
-	{
-		cleanup(game);
-		return (1);
-	}
+		return (cleanup(game), 1);
 	if (init_textures(game) != 0)
-	{
-		cleanup(game);
-		return (1);
-	}
+		return (cleanup(game), 1);
 	game->has_focus = 1;
 	init_player(game);
 	return (0);

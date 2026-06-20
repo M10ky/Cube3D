@@ -6,7 +6,7 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 19:47:24 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/18 23:46:35 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/20 11:36:31 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,11 +157,14 @@ typedef struct s_game
     void        *mlx;       /* pointeur de contexte MLX (opaque)              */
     void        *win;       /* pointeur de fenêtre MLX                        */
     int         has_focus;  /* 1 si la fenêtre a le focus, 0 sinon            */
+    t_map       *map;
 }   t_game;
 
 
 int     init_mock_config(t_config *config, t_map *map);
 void	cleanup_mock_config(t_config *cfg);
+void	free_map(t_map *map);
+void	free_all(t_map *map);
 
 int     init_game(t_game *game, t_map *map);
 void    init_player(t_game *game);
