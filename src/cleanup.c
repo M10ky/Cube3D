@@ -75,23 +75,23 @@ static void	free_textures(t_game *game)
 	}
 }
 
-static void	free_map(t_config *cfg)
-{
-	int	i;
+// static void	free_map(t_config *cfg)
+// {
+// 	int	i;
 
-	if (!cfg || !cfg->map)
-		return ;
+// 	if (!cfg || !cfg->map)
+// 		return ;
 
-	i = 0;
-	while (cfg->map[i])
-	{
-		free(cfg->map[i]);
-		cfg->map[i] = NULL;
-		i++;
-	}
-	free(cfg->map);
-	cfg->map = NULL;
-}
+// 	i = 0;
+// 	while (cfg->map[i])
+// 	{
+// 		free(cfg->map[i]);
+// 		cfg->map[i] = NULL;
+// 		i++;
+// 	}
+// 	free(cfg->map);
+// 	cfg->map = NULL;
+// }
 
 static void	free_mlx_context(t_game *game)
 {
@@ -124,7 +124,7 @@ void	cleanup(t_game *game)
 		return ;
 
 	free_textures(game);
-	free_map(&game->config);
+	// free_map(&game->config);
 	cleanup_mock_config(&game->config);   /* sécurité supplémentaire */
 	free_mlx_context(game);
 

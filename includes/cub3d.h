@@ -6,7 +6,7 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 19:47:24 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/17 21:40:40 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/18 23:46:35 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,18 @@
 
 # define KEY_ESC     65307
 # define KEY_W       119
-# define KEY_A       100
+# define KEY_A       97
 # define KEY_S       115
-# define KEY_D       97
-# define KEY_LEFT    65363
-# define KEY_RIGHT   65361
+# define KEY_D       100
+# define KEY_LEFT    65361
+# define KEY_RIGHT   65363
 
 
 # define EVT_KEY_PRESS    2
 # define EVT_KEY_RELEASE  3
+# define EVT_FOCUS_OUT    10
+# define EVT_FOCUS_IN     9
+# define EVT_LEAVE_NOTIFY 8
 # define EVT_CLOSE        17
 
 
@@ -153,6 +156,7 @@ typedef struct s_game
     t_keys      keys;       /* état des touches (0=relâchée, 1=enfoncée)     */
     void        *mlx;       /* pointeur de contexte MLX (opaque)              */
     void        *win;       /* pointeur de fenêtre MLX                        */
+    int         has_focus;  /* 1 si la fenêtre a le focus, 0 sinon            */
 }   t_game;
 
 
@@ -176,5 +180,8 @@ void    handle_input(t_game *game);
 void    cleanup(t_game *game);
 void    cleanup_exit(t_game *game);
 int     print_error(const char *msg);
+
+int	handle_focus_lost(void *param);
+int	handle_focus_in(void *param);
 
 #endif

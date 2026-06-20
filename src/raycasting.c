@@ -6,7 +6,7 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/30 06:41:13 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/11 00:12:17 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/18 22:53:23 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static	char	map_safe(t_config *cfg, int x, int y)
 {
 	if (y < 0 || y >= cfg->map_h || x < 0 || x >= cfg->map_w)
 		return ('1');
-	if (x >= (int)ft_strlen(cfg->map[y]))
+	if (x >= (int)ft_strlen_cube(cfg->map[y]))
 		return ('1');
 	return (cfg->map[y][x]);
 }
@@ -98,12 +98,16 @@ static	void	calc_wall(t_game *game, t_ray *ray)
 	t_player	*p;
 
 	p = &game->player;
+
+	/* Distance au mur */
 	if (ray->side == 0)
 		ray->wall_dist = ray->side_x - ray->delta_x;
 	else
 		ray->wall_dist = ray->side_y - ray->delta_y;
+
 	if (ray->wall_dist < 0.001)
 		ray->wall_dist = 0.001;
+
 	ray->line_h = (int)(SCREEN_H / ray->wall_dist);
 	ray->draw_y0 = SCREEN_H / 2 - ray->line_h / 2;
 	if (ray->draw_y0 < 0)
@@ -111,30 +115,37 @@ static	void	calc_wall(t_game *game, t_ray *ray)
 	ray->draw_y1 = SCREEN_H / 2 + ray->line_h / 2;
 	if (ray->draw_y1 >= SCREEN_H)
 		ray->draw_y1 = SCREEN_H - 1;
-	if (ray->side == 0)
+
+	/* Détermination de la face (texture) */
+	if (ray->side == 0)  /* mur vertical (E/W) */
 	{
 		if (ray->step_x > 0)
 			ray->face = EAST;
 		else
 			ray->face = WEST;
 	}
-	else
+	else                /* mur horizontal (N/S) */
 	{
 		if (ray->step_y > 0)
 			ray->face = SOUTH;
 		else
 			ray->face = NORTH;
 	}
+
+	/* Calcul de la position sur la texture */
 	if (ray->side == 0)
 		wall_hit = p->pos_y + ray->wall_dist * ray->dir_y;
 	else
 		wall_hit = p->pos_x + ray->wall_dist * ray->dir_x;
+
 	wall_hit -= floor(wall_hit);
 	ray->tex_x = (int)(wall_hit * TEX_W);
-	if (ray->side == 0 && ray->dir_x > 0.0)
+
+	/* === MIRRORING CORRECT (le plus important) === */
+	if ((ray->side == 0 && ray->step_x < 0) ||      /* Est */
+	    (ray->side == 1 && ray->step_y > 0))        /* Sud */
 		ray->tex_x = TEX_W - ray->tex_x - 1;
-	if (ray->side == 1 && ray->dir_y < 0.0)
-		ray->tex_x = TEX_W - ray->tex_x - 1;
+
 	if (ray->tex_x < 0)
 		ray->tex_x = 0;
 	if (ray->tex_x >= TEX_W)

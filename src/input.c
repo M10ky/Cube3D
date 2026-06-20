@@ -6,7 +6,7 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/09 06:37:18 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/11 00:07:35 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/18 23:51:23 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,18 +76,20 @@ static	void	rotate_player(t_player *p, double angle)
 	p->plane_y = old_plane_x * sin(angle) + p->plane_y * cos(angle);
 }
 
-static	int	is_wall(t_config *cfg, double x, double y)
+static int is_wall(t_config *cfg, double x, double y)
 {
-	int	mx;
-	int	my;
+    int mx;
+    int my;
 
-	mx = (int)x;
-	my = (int)y;
-	if (my < 0 || my >= cfg->map_h || mx < 0 || mx >= cfg->map_w)
-		return (1);
-	if (mx >= (int)ft_strlen(cfg->map[my]))
-		return (1);
-	return (cfg->map[my][mx] == '1');
+    mx = (int)x;
+    my = (int)y;
+    if (my < 0 || my >= cfg->map_h || mx < 0 || mx >= cfg->map_w)
+        return (1);
+    if (!cfg->map[my])                           // ← protection NULL
+        return (1);
+    if (mx >= (int)ft_strlen_cube(cfg->map[my]))
+        return (1);
+    return (cfg->map[my][mx] == '1');
 }
 
 static	void	try_move(t_game *game, double dx, double dy)
@@ -120,4 +122,20 @@ void	handle_input(t_game *game)
 		try_move(game, p->dir_y * MOV_SPD, -p->dir_x * MOV_SPD);
 	if (game->keys.d)
 		try_move(game, -p->dir_y * MOV_SPD, p->dir_x * MOV_SPD);
+}
+int	handle_focus_lost(void *param)
+{
+    t_game	*game = (t_game *)param;
+
+    game->has_focus = 0;
+    ft_memset(&game->keys, 0, sizeof(t_keys));
+    printf(" Leave\n");   // debug
+    return (0);
+}
+int	handle_focus_in(void *param)
+{
+    t_game	*game = (t_game *)param;
+    game->has_focus = 1;
+    printf("Focus\n");   // debug
+    return (0);
 }

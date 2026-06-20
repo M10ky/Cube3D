@@ -6,7 +6,7 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 09:59:25 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/11 00:16:02 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/18 23:41:45 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,17 @@ void	render_frame(t_game *game)
 
 int	game_loop(void *param)
 {
-	t_game	*game;
+    t_game	*game = (t_game *)param;
 
-	game = (t_game *)param;
-	handle_input(game);
-	render_frame(game);
-	return (0);
+    /* Version debug - moins stricte */
+    if (game->has_focus == 0)
+    {
+        ft_memset(&game->keys, 0, sizeof(t_keys));
+        render_frame(game);
+        return (0);
+    }
+
+    handle_input(game);
+    render_frame(game);
+    return (0);
 }

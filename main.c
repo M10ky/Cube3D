@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonandri <jonandri@student.42antananari    +#+  +:+       +#+        */
+/*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/26 09:54:22 by jonandri          #+#    #+#             */
-/*   Updated: 2026/06/17 09:19:57 by jonandri         ###   ########.fr       */
+/*   Updated: 2026/06/18 23:49:05 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,9 @@ int main(int argc, char **argv)
             return (1);
         mlx_hook(game.win, EVT_KEY_PRESS, 1L << 0, key_press, &game);
         mlx_hook(game.win, EVT_KEY_RELEASE, 1L << 1, key_release, &game);
+        // mlx_hook(game.win, EVT_FOCUS_OUT, 1L<<5, handle_focus_lost, &game);
+        mlx_hook(game.win, EVT_FOCUS_IN,  1L<<5, handle_focus_in,  &game);
+        mlx_hook(game.win, EVT_LEAVE_NOTIFY, 1L<<5, handle_focus_lost, &game);
         mlx_hook(game.win, EVT_CLOSE, 0, handle_close, &game);
         mlx_loop_hook(game.mlx, game_loop, &game);
         mlx_loop(game.mlx);

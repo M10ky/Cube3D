@@ -130,6 +130,7 @@ int	init_game(t_game *game, t_map *map)
 		cleanup(game);
 		return (1);
 	}
+	game->has_focus = 1;
 	init_player(game);
 	return (0);
 }

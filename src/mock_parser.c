@@ -59,34 +59,34 @@ static void	free_mock_textures(t_config *cfg)
 
 static void	setup_direction(t_config *cfg, char dir)
 {
-	if (dir == 'N')
-	{
-		cfg->spawn_dir_x = -1.0;
-		cfg->spawn_dir_y = 0.0;
-		cfg->spawn_plane_x = 0.0;
-		cfg->spawn_plane_y = 0.66;
-	}
-	else if (dir == 'S')
-	{
-		cfg->spawn_dir_x = 1.0;
-		cfg->spawn_dir_y = 0.0;
-		cfg->spawn_plane_x = 0.0;
-		cfg->spawn_plane_y = -0.66;
-	}
-	else if (dir == 'E')
-	{
-		cfg->spawn_dir_x = 0.0;
-		cfg->spawn_dir_y = 1.0;
-		cfg->spawn_plane_x = -0.66;
-		cfg->spawn_plane_y = 0.0;
-	}
-	else if (dir == 'W')
-	{
-		cfg->spawn_dir_x = 0.0;
-		cfg->spawn_dir_y = -1.0;
-		cfg->spawn_plane_x = 0.66;
-		cfg->spawn_plane_y = 0.0;
-	}
+    if (dir == 'N')
+    {
+        cfg->spawn_dir_x = 0.0;   // regarde vers le haut (-y)
+        cfg->spawn_dir_y = -1.0;
+        cfg->spawn_plane_x = 0.66;   // FOV vers la droite
+        cfg->spawn_plane_y = 0.0;
+    }
+    else if (dir == 'S')
+    {
+        cfg->spawn_dir_x = 0.0;
+        cfg->spawn_dir_y = 1.0;
+        cfg->spawn_plane_x = -0.66;
+        cfg->spawn_plane_y = 0.0;
+    }
+    else if (dir == 'E')
+    {
+        cfg->spawn_dir_x = 1.0;
+        cfg->spawn_dir_y = 0.0;
+        cfg->spawn_plane_x = 0.0;
+        cfg->spawn_plane_y = 0.66;
+    }
+    else if (dir == 'W')
+    {
+        cfg->spawn_dir_x = -1.0;
+        cfg->spawn_dir_y = 0.0;
+        cfg->spawn_plane_x = 0.0;
+        cfg->spawn_plane_y = -0.66;
+    }
 }
 
 
