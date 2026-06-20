@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/29 20:39:02 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/17 xx:xx:xx by Grok              ###   ########.fr       */
+/*   Created: 2026/06/02 11:12:42 by miokrako          #+#    #+#             */
+/*   Updated: 2026/06/20 11:14:06 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	put_pixel(t_img *buf, int x, int y, unsigned int color)
 	dst = buf->addr + y * buf->line_len + x * (buf->bpp / 8);
 	*(unsigned int *)dst = color;
 }
+
 static int	init_mlx(t_game *game)
 {
 	game->mlx = mlx_init();
@@ -36,7 +37,6 @@ static int	init_mlx(t_game *game)
 		game->mlx = NULL;
 		return (print_error("MLX: failed to create window"));
 	}
-
 	return (0);
 }
 
@@ -51,7 +51,6 @@ static int	init_framebuffer(t_game *game)
 			&game->buf.line_len, &game->buf.endian);
 	if (!game->buf.addr)
 		return (print_error("MLX: failed to get image address"));
-
 	return (0);
 }
 
@@ -96,13 +95,10 @@ void	init_player(t_game *game)
 {
 	game->player.pos_x = game->config.spawn_x;
 	game->player.pos_y = game->config.spawn_y;
-
 	game->player.dir_x = game->config.spawn_dir_x;
 	game->player.dir_y = game->config.spawn_dir_y;
-
 	game->player.plane_x = game->config.spawn_plane_x;
 	game->player.plane_y = game->config.spawn_plane_y;
-
 	game->player.move_speed = 0.1;
 	game->player.rot_speed = 0.05;
 }

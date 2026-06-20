@@ -6,11 +6,46 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/09 06:37:18 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/18 23:51:23 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/20 11:14:22 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+/*
+** handle_focus_lost
+** Déclenché sur EVT_FOCUS_OUT (FocusOut, event 10).
+** Appelé lors de tout changement de focus clavier :
+**   - Alt+Tab
+**   - clic sur une autre fenêtre
+**   - raccourcis window manager
+** Action : réinitialiser TOUTES les touches sans exception.
+*/
+int	handle_focus_lost(void *param)
+{
+	t_game	*game;
+
+	game = (t_game *)param;
+	game->has_focus = 0;
+	ft_memset(&game->keys, 0, sizeof(t_keys));
+	return (0);
+}
+
+/*
+** handle_focus_in
+** Déclenché sur EVT_FOCUS_IN (FocusIn, event 9).
+** On remet has_focus à 1 SANS restaurer aucune touche :
+** le joueur devra appuyer à nouveau sur chaque touche.
+*/
+int	handle_focus_in(void *param)
+{
+	t_game	*game;
+
+	game = (t_game *)param;
+	game->has_focus = 1;
+	ft_memset(&game->keys, 0, sizeof(t_keys));
+	return (0);
+}
 
 int	key_press(int keycode, void *param)
 {
@@ -63,7 +98,7 @@ int	handle_close(void *param)
 	return (0);
 }
 
-static	void	rotate_player(t_player *p, double angle)
+static void	rotate_player(t_player *p, double angle)
 {
 	double	old_dir_x;
 	double	old_plane_x;
@@ -76,23 +111,23 @@ static	void	rotate_player(t_player *p, double angle)
 	p->plane_y = old_plane_x * sin(angle) + p->plane_y * cos(angle);
 }
 
-static int is_wall(t_config *cfg, double x, double y)
+static int	is_wall(t_config *cfg, double x, double y)
 {
-    int mx;
-    int my;
+	int	mx;
+	int	my;
 
-    mx = (int)x;
-    my = (int)y;
-    if (my < 0 || my >= cfg->map_h || mx < 0 || mx >= cfg->map_w)
-        return (1);
-    if (!cfg->map[my])                           // ← protection NULL
-        return (1);
-    if (mx >= (int)ft_strlen_cube(cfg->map[my]))
-        return (1);
-    return (cfg->map[my][mx] == '1');
+	mx = (int)x;
+	my = (int)y;
+	if (my < 0 || my >= cfg->map_h || mx < 0 || mx >= cfg->map_w)
+		return (1);
+	if (!cfg->map[my])
+		return (1);
+	if (mx >= (int)ft_strlen(cfg->map[my]))
+		return (1);
+	return (cfg->map[my][mx] == '1');
 }
 
-static	void	try_move(t_game *game, double dx, double dy)
+static void	try_move(t_game *game, double dx, double dy)
 {
 	double	new_x;
 	double	new_y;
@@ -122,20 +157,4 @@ void	handle_input(t_game *game)
 		try_move(game, p->dir_y * MOV_SPD, -p->dir_x * MOV_SPD);
 	if (game->keys.d)
 		try_move(game, -p->dir_y * MOV_SPD, p->dir_x * MOV_SPD);
-}
-int	handle_focus_lost(void *param)
-{
-    t_game	*game = (t_game *)param;
-
-    game->has_focus = 0;
-    ft_memset(&game->keys, 0, sizeof(t_keys));
-    printf(" Leave\n");   // debug
-    return (0);
-}
-int	handle_focus_in(void *param)
-{
-    t_game	*game = (t_game *)param;
-    game->has_focus = 1;
-    printf("Focus\n");   // debug
-    return (0);
 }
