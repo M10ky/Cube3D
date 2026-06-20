@@ -6,7 +6,7 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 11:12:42 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/20 11:34:12 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/20 12:00:39 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static int	init_mlx(t_game *game)
 	game->mlx = mlx_init();
 	if (!game->mlx)
 		return (print_error("MLX: failed to initialize"));
-
 	game->win = mlx_new_window(game->mlx, SCREEN_W, SCREEN_H, "Cub3D");
 	if (!game->win)
 	{
@@ -40,13 +39,11 @@ static int	init_mlx(t_game *game)
 	return (0);
 }
 
-
 static int	init_framebuffer(t_game *game)
 {
 	game->buf.img = mlx_new_image(game->mlx, SCREEN_W, SCREEN_H);
 	if (!game->buf.img)
 		return (print_error("MLX: failed to create image buffer"));
-
 	game->buf.addr = mlx_get_data_addr(game->buf.img, &game->buf.bpp,
 			&game->buf.line_len, &game->buf.endian);
 	if (!game->buf.addr)
@@ -60,13 +57,11 @@ static int	load_texture(t_game *game, int index, char *path)
 			&game->tex[index].width, &game->tex[index].height);
 	if (!game->tex[index].img)
 		return (print_error("Texture: failed to load XPM"));
-
 	game->tex[index].addr = mlx_get_data_addr(game->tex[index].img,
 			&game->tex[index].bpp, &game->tex[index].line_len,
 			&game->tex[index].endian);
 	if (!game->tex[index].addr)
 		return (print_error("Texture: failed to get data address"));
-
 	return (0);
 }
 
@@ -106,15 +101,26 @@ void	init_player(t_game *game)
 int	init_game(t_game *game, t_map *map)
 {
 	ft_memset(game, 0, sizeof(t_game));
-	game->map = map;
 	if (init_mock_config(&game->config, map) != 0)
-		return (cleanup(game), 1);
+	{
+		cleanup_mock_config(&game->config);
+		return (1);
+	}
 	if (init_mlx(game) != 0)
-		return (cleanup(game), 1);
+	{
+		cleanup_mock_config(&game->config);
+		return (1);
+	}
 	if (init_framebuffer(game) != 0)
-		return (cleanup(game), 1);
+	{
+		cleanup(game);
+		return (1);
+	}
 	if (init_textures(game) != 0)
-		return (cleanup(game), 1);
+	{
+		cleanup(game);
+		return (1);
+	}
 	game->has_focus = 1;
 	init_player(game);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/30 06:41:13 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/20 11:16:53 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/20 12:00:31 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,8 @@ static	void	init_ray(t_game *game, int col, t_ray *ray)
 	ray->map_y = (int)p->pos_y;
 }
 
-static	void	init_dda(t_game *game, t_ray *ray)
+static	void	calc_delta(t_ray *ray)
 {
-	t_player	*p;
-
-	p = &game->player;
 	if (ray->dir_x == 0.0)
 		ray->delta_x = 1e30;
 	else
@@ -47,6 +44,13 @@ static	void	init_dda(t_game *game, t_ray *ray)
 		ray->delta_y = 1e30;
 	else
 		ray->delta_y = fabs(1.0 / ray->dir_y);
+}
+
+static	void	calc_step_x(t_game *game, t_ray *ray)
+{
+	t_player	*p;
+
+	p = &game->player;
 	if (ray->dir_x < 0.0)
 	{
 		ray->step_x = -1;
@@ -57,6 +61,13 @@ static	void	init_dda(t_game *game, t_ray *ray)
 		ray->step_x = 1;
 		ray->side_x = (ray->map_x + 1.0 - p->pos_x) * ray->delta_x;
 	}
+}
+
+static	void	calc_step_y(t_game *game, t_ray *ray)
+{
+	t_player	*p;
+
+	p = &game->player;
 	if (ray->dir_y < 0.0)
 	{
 		ray->step_y = -1;
@@ -67,7 +78,13 @@ static	void	init_dda(t_game *game, t_ray *ray)
 		ray->step_y = 1;
 		ray->side_y = (ray->map_y + 1.0 - p->pos_y) * ray->delta_y;
 	}
-	(void)game;
+}
+
+static	void	init_dda(t_game *game, t_ray *ray)
+{
+	calc_delta(ray);
+	calc_step_x(game, ray);
+	calc_step_y(game, ray);
 }
 
 static	void	do_dda(t_game *game, t_ray *ray)
@@ -92,22 +109,18 @@ static	void	do_dda(t_game *game, t_ray *ray)
 	}
 }
 
-static	void	calc_wall(t_game *game, t_ray *ray)
+static	void	calc_wall_dist(t_ray *ray)
 {
-	double		wall_hit;
-	t_player	*p;
-
-	p = &game->player;
-
-	/* Distance au mur */
 	if (ray->side == 0)
 		ray->wall_dist = ray->side_x - ray->delta_x;
 	else
 		ray->wall_dist = ray->side_y - ray->delta_y;
-
 	if (ray->wall_dist < 0.001)
 		ray->wall_dist = 0.001;
+}
 
+static	void	calc_draw_bounds(t_ray *ray)
+{
 	ray->line_h = (int)(SCREEN_H / ray->wall_dist);
 	ray->draw_y0 = SCREEN_H / 2 - ray->line_h / 2;
 	if (ray->draw_y0 < 0)
@@ -115,41 +128,51 @@ static	void	calc_wall(t_game *game, t_ray *ray)
 	ray->draw_y1 = SCREEN_H / 2 + ray->line_h / 2;
 	if (ray->draw_y1 >= SCREEN_H)
 		ray->draw_y1 = SCREEN_H - 1;
+}
 
-	/* Détermination de la face (texture) */
-	if (ray->side == 0)  /* mur vertical (E/W) */
+static	void	calc_wall_face(t_ray *ray)
+{
+	if (ray->side == 0)
 	{
 		if (ray->step_x > 0)
 			ray->face = EAST;
 		else
 			ray->face = WEST;
 	}
-	else                /* mur horizontal (N/S) */
+	else
 	{
 		if (ray->step_y > 0)
 			ray->face = SOUTH;
 		else
 			ray->face = NORTH;
 	}
+}
 
-	/* Calcul de la position sur la texture */
+static	void	calc_tex_x(t_player *p, t_ray *ray)
+{
+	double	wall_hit;
+
 	if (ray->side == 0)
 		wall_hit = p->pos_y + ray->wall_dist * ray->dir_y;
 	else
 		wall_hit = p->pos_x + ray->wall_dist * ray->dir_x;
-
 	wall_hit -= floor(wall_hit);
 	ray->tex_x = (int)(wall_hit * TEX_W);
-
-	/* === MIRRORING CORRECT (le plus important) === */
-	if ((ray->side == 0 && ray->step_x < 0) ||      /* Est */
-	    (ray->side == 1 && ray->step_y > 0))        /* Sud */
+	if ((ray->side == 0 && ray->step_x < 0)
+		|| (ray->side == 1 && ray->step_y > 0))
 		ray->tex_x = TEX_W - ray->tex_x - 1;
-
 	if (ray->tex_x < 0)
 		ray->tex_x = 0;
 	if (ray->tex_x >= TEX_W)
 		ray->tex_x = TEX_W - 1;
+}
+
+static	void	calc_wall(t_game *game, t_ray *ray)
+{
+	calc_wall_dist(ray);
+	calc_draw_bounds(ray);
+	calc_wall_face(ray);
+	calc_tex_x(&game->player, ray);
 }
 
 void	cast_ray(t_game *game, int col, t_ray *ray)

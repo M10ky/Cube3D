@@ -6,7 +6,7 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/07 21:33:59 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/20 11:33:49 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/20 12:00:36 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,9 @@ int	print_error(const char *msg)
 	return (1);
 }
 
-void	cleanup_mock_config(t_config *cfg)
+static void	free_cfg_textures(t_config *cfg)
 {
 	int	i;
-
-	if (!cfg)
-		return ;
 
 	i = 0;
 	while (i < 4)
@@ -37,20 +34,31 @@ void	cleanup_mock_config(t_config *cfg)
 		}
 		i++;
 	}
+}
 
-	if (cfg->map)
+static void	free_cfg_map(t_config *cfg)
+{
+	int	i;
+
+	if (!cfg->map)
+		return ;
+	i = 0;
+	while (cfg->map[i])
 	{
-		i = 0;
-		while (cfg->map[i])
-		{
-			free(cfg->map[i]);
-			cfg->map[i] = NULL;
-			i++;
-		}
-		free(cfg->map);
-		cfg->map = NULL;
+		free(cfg->map[i]);
+		cfg->map[i] = NULL;
+		i++;
 	}
+	free(cfg->map);
+	cfg->map = NULL;
+}
 
+void	cleanup_mock_config(t_config *cfg)
+{
+	if (!cfg)
+		return ;
+	free_cfg_textures(cfg);
+	free_cfg_map(cfg);
 	cfg->map_h = 0;
 	cfg->map_w = 0;
 }
@@ -61,7 +69,6 @@ static void	free_textures(t_game *game)
 
 	if (!game || !game->mlx)
 		return ;
-
 	i = 0;
 	while (i < 4)
 	{
@@ -70,40 +77,19 @@ static void	free_textures(t_game *game)
 			mlx_destroy_image(game->mlx, game->tex[i].img);
 			game->tex[i].img = NULL;
 		}
-		/* tex_path déjà libéré par cleanup_mock_config */
 		i++;
 	}
 }
-
-// static void	free_map(t_config *cfg)
-// {
-// 	int	i;
-
-// 	if (!cfg || !cfg->map)
-// 		return ;
-
-// 	i = 0;
-// 	while (cfg->map[i])
-// 	{
-// 		free(cfg->map[i]);
-// 		cfg->map[i] = NULL;
-// 		i++;
-// 	}
-// 	free(cfg->map);
-// 	cfg->map = NULL;
-// }
 
 static void	free_mlx_context(t_game *game)
 {
 	if (!game)
 		return ;
-
 	if (game->win)
 	{
 		mlx_destroy_window(game->mlx, game->win);
 		game->win = NULL;
 	}
-
 	if (game->mlx)
 	{
 		if (game->buf.img)
@@ -117,27 +103,16 @@ static void	free_mlx_context(t_game *game)
 	}
 }
 
-
 void	cleanup(t_game *game)
 {
 	if (!game)
 		return ;
-
 	free_textures(game);
-	cleanup_mock_config(&game->config);   /* sécurité supplémentaire */
+	cleanup_mock_config(&game->config);
 	free_mlx_context(game);
-	if (game->map)
-	{
-		free_all(game->map);
-		free_map(game->map);
-		game->map = NULL;
-	}
-
-	/* Remettre à zéro les structures principales */
 	ft_memset(&game->config, 0, sizeof(t_config));
 	ft_memset(&game->player, 0, sizeof(t_player));
 }
-
 
 void	cleanup_exit(t_game *game)
 {

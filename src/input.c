@@ -6,7 +6,7 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/09 06:37:18 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/20 11:14:22 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/20 12:00:51 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,6 @@ int	handle_focus_lost(void *param)
 	return (0);
 }
 
-/*
-** handle_focus_in
-** Déclenché sur EVT_FOCUS_IN (FocusIn, event 9).
-** On remet has_focus à 1 SANS restaurer aucune touche :
-** le joueur devra appuyer à nouveau sur chaque touche.
-*/
 int	handle_focus_in(void *param)
 {
 	t_game	*game;

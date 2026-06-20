@@ -6,7 +6,7 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 09:59:25 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/20 11:16:39 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/20 12:00:26 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,25 +46,32 @@ static	void	draw_floor_strip(t_game *game, int col, int start_y)
 	}
 }
 
+static	t_texture	*get_wall_texture(t_game *game, t_ray *ray,
+		double *tex_pos, double *tex_step)
+{
+	t_texture	*tex;
+
+	tex = &game->tex[ray->face];
+	*tex_step = (double)TEX_H / (double)ray->line_h;
+	*tex_pos = ((double)ray->draw_y0 - (double)SCREEN_H / 2.0
+			+ (double)ray->line_h / 2.0) * (*tex_step);
+	return (tex);
+}
+
 static	void	draw_wall_strip(t_game *game, int col, t_ray *ray)
 {
 	unsigned int	color;
 	t_texture		*tex;
 	double			tex_step;
 	double			tex_pos;
-	int				tex_y;
 	int				y;
 
-	tex = &game->tex[ray->face];
-	tex_step = (double)TEX_H / (double)ray->line_h;
-	tex_pos = ((double)ray->draw_y0 - (double)SCREEN_H / 2.0
-			+ (double)ray->line_h / 2.0) * tex_step;
+	tex = get_wall_texture(game, ray, &tex_pos, &tex_step);
 	y = ray->draw_y0;
 	while (y < ray->draw_y1)
 	{
-		tex_y = (int)tex_pos & (TEX_H - 1);
+		color = sample_texture(tex, ray->tex_x, (int)tex_pos & (TEX_H - 1));
 		tex_pos += tex_step;
-		color = sample_texture(tex, ray->tex_x, tex_y);
 		put_pixel(&game->buf, col, y, color);
 		y++;
 	}
@@ -107,4 +114,3 @@ int	game_loop(void *param)
 	render_frame(game);
 	return (0);
 }
-
