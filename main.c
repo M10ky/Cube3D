@@ -6,7 +6,7 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/26 09:54:22 by jonandri          #+#    #+#             */
-/*   Updated: 2026/06/20 11:34:54 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/21 20:00:34 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 void	free_map(t_map *map)
 {
 	t_line	*tmp;
+
+	if (!map)
+		return ;
 
 	while (map->first_line)
 	{
@@ -29,6 +32,8 @@ void	free_all(t_map *map)
 {
 	int	i;
 
+	if (!map)
+		return ;
 	if (!map)
 		return ;
 	if (map->no_path)
@@ -79,7 +84,11 @@ int	main(int argc, char **argv)
 	{
 		ft_memset(&game, 0, sizeof(t_game));
 		if (init_game(&game, &map) != 0)
+		{
+			free_all(&map);
+			free_map(&map);
 			return (1);
+		}
 
 		/* Clavier */
 		mlx_hook(game.win, EVT_KEY_PRESS,   1L << 0,  key_press,         &game);

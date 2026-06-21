@@ -6,7 +6,7 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 19:47:24 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/20 11:36:31 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/21 20:03:36 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@
 # define TEX_H       64
 
 
-# define MOV_SPD     0.03
-# define ROT_SPD     0.02
+# define MOV_SPD     0.01
+# define ROT_SPD     0.01
 
 
 # define NORTH       0

@@ -1,14 +1,14 @@
 F 0,0,0
 C 0,0,0
 
-SO ./textures/3.xpm
-NO ./textures/1.xpm
-WE ./textures/e.xpm
+SO ./textures/1.xpm
+NO ./textures/e.xpm
+WE ./textures/2.xpm
 EA ./textures/e.xpm
 
 11111111 111111111111111
 11111  111       111
-10111101S111011101
+10111101E111011101
 101010100100101001
 101010000101000101
 110000001010000001

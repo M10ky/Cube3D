@@ -6,7 +6,7 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/30 06:41:13 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/20 12:00:31 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/21 19:31:28 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,16 +135,16 @@ static	void	calc_wall_face(t_ray *ray)
 	if (ray->side == 0)
 	{
 		if (ray->step_x > 0)
-			ray->face = EAST;
-		else
 			ray->face = WEST;
+		else
+			ray->face = EAST;
 	}
 	else
 	{
 		if (ray->step_y > 0)
-			ray->face = SOUTH;
-		else
 			ray->face = NORTH;
+		else
+			ray->face = SOUTH;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 11:12:42 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/20 12:00:39 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/21 19:54:56 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void	init_player(t_game *game)
 int	init_game(t_game *game, t_map *map)
 {
 	ft_memset(game, 0, sizeof(t_game));
+	game->map = map;
 	if (init_mock_config(&game->config, map) != 0)
 	{
 		cleanup_mock_config(&game->config);
