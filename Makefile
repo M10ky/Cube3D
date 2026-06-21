@@ -6,7 +6,7 @@
 #    By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/16 12:01:50 by jonandri          #+#    #+#              #
-#    Updated: 2026/06/15 22:01:41 by miokrako         ###   ########.fr        #
+#    Updated: 2026/06/21 21:48:23 by miokrako         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,15 @@ SRCS = main.c sources/pixel_utils.c sources/read_files.c sources/map_init.c sour
 	sources/strlen.c sources/utils_for_map.c sources/flood.c sources/verify_flood.c \
 	src/cleanup.c \
     src/init.c \
+    src/init_mlx.c \
     src/input.c \
+    src/dda.c \
+    src/draw.c \
+    src/wall.c \
+    src/input_utils.c \
+    src/free.c \
+    src/setup.c \
+    src/set_dir.c \
     src/mock_parser.c \
     src/raycasting.c \
     src/render.c
