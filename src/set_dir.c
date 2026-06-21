@@ -6,11 +6,11 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/21 21:10:17 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/21 21:11:46 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/21 23:51:11 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes_raycasting/cub3d.h"
 
 void	set_dir_north(t_config *cfg)
 {

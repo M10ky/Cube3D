@@ -6,11 +6,11 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/29 20:39:02 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/21 21:22:16 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/21 23:51:10 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes_raycasting/cub3d.h"
 
 void	free_mock_textures(t_config *cfg)
 {

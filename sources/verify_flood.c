@@ -6,7 +6,7 @@
 /*   By: jonandri <jonandri@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/02 13:32:43 by jonandri          #+#    #+#             */
-/*   Updated: 2026/06/14 20:19:33 by jonandri         ###   ########.fr       */
+/*   Updated: 2026/06/17 17:15:35 by jonandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	verify_flood(t_map *map)
 {
-	int y;
-	int x;
+	int	y;
+	int	x;
 
 	y = 0;
 	while (map->true_grid[y] != NULL)
@@ -32,7 +32,7 @@ void	verify_flood(t_map *map)
 }
 
 static int	if_not_v(t_map *map, int x, int y)
-{	
+{
 	if (y == 0 || y == (map->height - 1) || x == 0 || x == (map->width - 1))
 		return (1);
 	if (map->true_grid[y][x + 1] == ' ' || map->true_grid[y][x - 1] == ' ')
@@ -42,8 +42,8 @@ static int	if_not_v(t_map *map, int x, int y)
 
 int	verify_map(t_map *map)
 {
-	int y;
-	int x;
+	int	y;
+	int	x;
 
 	y = 0;
 	while (map->true_grid[y] != NULL)

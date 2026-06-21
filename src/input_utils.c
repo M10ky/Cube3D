@@ -6,11 +6,11 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/21 21:08:16 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/21 21:08:27 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/21 23:50:51 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes_raycasting/cub3d.h"
 
 int	handle_focus_lost(void *param)
 {

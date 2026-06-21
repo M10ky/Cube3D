@@ -6,11 +6,11 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/07 21:33:59 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/21 20:44:33 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/21 23:57:39 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes_raycasting/cub3d.h"
 
 static void	free_textures(t_game *game)
 {

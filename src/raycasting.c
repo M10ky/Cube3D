@@ -6,11 +6,11 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/30 06:41:13 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/21 21:30:00 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/21 23:51:11 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes_raycasting/cub3d.h"
 
 static	char	map_safe(t_config *cfg, int x, int y)
 {

@@ -6,11 +6,11 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/09 06:37:18 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/21 21:20:24 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/21 23:51:08 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes_raycasting/cub3d.h"
 
 static void	rotate_player(t_player *p, double angle)
 {

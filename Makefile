@@ -6,29 +6,35 @@
 #    By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/04/16 12:01:50 by jonandri          #+#    #+#              #
-#    Updated: 2026/06/21 21:48:23 by miokrako         ###   ########.fr        #
+#    Updated: 2026/06/21 23:56:00 by miokrako         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = cube3D
+NAME = cub3D
 
 SRCS = main.c sources/pixel_utils.c sources/read_files.c sources/map_init.c sources/get_next_line.c \
 	sources/get_next_line_utils.c sources/parse_utils.c sources/parse_color.c sources/map_parsing.c \
 	sources/strlen.c sources/utils_for_map.c sources/flood.c sources/verify_flood.c \
+	src/dda.c \
+	src/draw.c \
 	src/cleanup.c \
+	src/free_main.c \
+	src/free.c \
     src/init.c \
     src/init_mlx.c \
     src/input.c \
-    src/dda.c \
-    src/draw.c \
-    src/wall.c \
     src/input_utils.c \
-    src/free.c \
-    src/setup.c \
-    src/set_dir.c \
     src/mock_parser.c \
     src/raycasting.c \
-    src/render.c
+    src/render.c \
+    src/setup.c \
+    src/wall.c \
+    src/set_dir.c \
+	sources/verify_file.c \
+	sources/texture_utils.c \
+	sources/texture_utils2.c \
+	sources/utils.c
+
 
 OBJS = $(SRCS:.c=.o)
 
@@ -39,7 +45,7 @@ LIBFT = $(LIBFT_PATH)/libft.a
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 
-HEADER = -I$(MLX_PATH) -I./header -I$(LIBFT_PATH)
+HEADER = -I$(MLX_PATH) -I./includes_parsing -I$(LIBFT_PATH)
 
 MLX_FLAG = -L$(MLX_PATH) -lmlx -lXext -lX11 -lm
 

@@ -6,11 +6,11 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/21 21:25:54 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/21 21:29:25 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/21 23:51:58 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes_raycasting/cub3d.h"
 
 void	calc_wall_dist(t_ray *ray)
 {

@@ -6,11 +6,11 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/21 20:43:34 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/21 20:44:01 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/21 23:50:39 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes_raycasting/cub3d.h"
 
 int	print_error(const char *msg)
 {

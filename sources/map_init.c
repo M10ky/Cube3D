@@ -6,7 +6,7 @@
 /*   By: jonandri <jonandri@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 19:50:12 by jonandri          #+#    #+#             */
-/*   Updated: 2026/06/14 19:57:07 by jonandri         ###   ########.fr       */
+/*   Updated: 2026/06/21 17:44:27 by jonandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,17 @@ void	init_map(t_map *map)
 	map->so_path = NULL;
 	map->we_path = NULL;
 	map->ea_path = NULL;
-
 	map->first_line = NULL;
 	map->last_line = NULL;
 	map->grid = NULL;
+	map->true_grid = NULL;
 	map->map_started = 0;
+	map->height = 0;
 	map->has_ceiling = 0;
 	map->has_floor = 0;
 	map->has_no = 0;
 	map->has_so = 0;
 	map->has_we = 0;
 	map->has_ea = 0;
+	map->len = 0;
 }

@@ -1,37 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_for_map.c                                    :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonandri <jonandri@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/29 18:03:31 by jonandri          #+#    #+#             */
-/*   Updated: 2026/06/17 17:15:50 by jonandri         ###   ########.fr       */
+/*   Created: 2026/06/18 07:08:54 by jonandri          #+#    #+#             */
+/*   Updated: 2026/06/18 07:09:22 by jonandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-void	search_player(t_map *map)
+int	get_map_width(t_map *map)
 {
-	int	y;
-	int	x;
+	t_line	*current;
+	int		max;
 
-	y = 0;
-	while (map->true_grid[y] != NULL)
+	max = 0;
+	current = map->first_line;
+	while (current)
 	{
-		x = 0;
-		while (map->true_grid[y][x] != '\0')
-		{
-			if (map->true_grid[y][x] == 'N' || map->true_grid[y][x] == 'S'
-				|| map->true_grid[y][x] == 'E' || map->true_grid[y][x] == 'W')
-			{
-				map->dir = map->true_grid[y][x];
-				map->pos_x = x;
-				map->pos_y = y;
-			}
-			x++;
-		}
-		y++;
+		if (ft_strlen_cube(current->content) > max)
+			max = ft_strlen_cube(current->content);
+		current = current->next;
 	}
+	return (max);
 }

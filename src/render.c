@@ -6,11 +6,11 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/04 09:59:25 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/21 21:50:51 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/21 23:49:26 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes_raycasting/cub3d.h"
 
 unsigned int	sample_texture(t_texture *tex, int tx, int ty)
 {

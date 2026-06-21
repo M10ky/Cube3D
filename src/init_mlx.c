@@ -6,11 +6,11 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/21 20:37:10 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/21 20:41:06 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/21 23:50:43 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes_raycasting/cub3d.h"
 
 void	put_pixel(t_img *buf, int x, int y, unsigned int color)
 {

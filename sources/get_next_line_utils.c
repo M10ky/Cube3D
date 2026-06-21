@@ -6,7 +6,7 @@
 /*   By: jonandri <jonandri@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/03 20:01:05 by jonandri          #+#    #+#             */
-/*   Updated: 2026/05/03 20:14:26 by jonandri         ###   ########.fr       */
+/*   Updated: 2026/06/17 18:11:30 by jonandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	*ft_strjoin_get(char const *s1, char const *s2)
 	i = 0;
 	l = 0;
 	dest = malloc(((ft_strlen_get(s1) + (ft_strlen_get(s2))) + 1)
-		* sizeof(char));
+			* sizeof(char));
 	if (dest == NULL)
 		return (NULL);
 	while (s1[i] != '\0')

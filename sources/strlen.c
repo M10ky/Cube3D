@@ -6,7 +6,7 @@
 /*   By: jonandri <jonandri@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/20 09:08:55 by jonandri          #+#    #+#             */
-/*   Updated: 2026/05/29 18:54:20 by jonandri         ###   ########.fr       */
+/*   Updated: 2026/06/17 17:16:18 by jonandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_strlen_cube(char *s)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (s == NULL)

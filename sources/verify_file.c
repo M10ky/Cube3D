@@ -1,37 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_for_map.c                                    :+:      :+:    :+:   */
+/*   verify_file.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonandri <jonandri@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/29 18:03:31 by jonandri          #+#    #+#             */
-/*   Updated: 2026/06/17 17:15:50 by jonandri         ###   ########.fr       */
+/*   Created: 2026/06/17 16:53:57 by jonandri          #+#    #+#             */
+/*   Updated: 2026/06/17 17:14:54 by jonandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-void	search_player(t_map *map)
+int	is_xpm(char *str)
 {
-	int	y;
-	int	x;
+	size_t	len;
 
-	y = 0;
-	while (map->true_grid[y] != NULL)
-	{
-		x = 0;
-		while (map->true_grid[y][x] != '\0')
-		{
-			if (map->true_grid[y][x] == 'N' || map->true_grid[y][x] == 'S'
-				|| map->true_grid[y][x] == 'E' || map->true_grid[y][x] == 'W')
-			{
-				map->dir = map->true_grid[y][x];
-				map->pos_x = x;
-				map->pos_y = y;
-			}
-			x++;
-		}
-		y++;
-	}
+	len = ft_strlen(str);
+	if (len < 4)
+		return (1);
+	if (ft_strncmp(str + (len - 4), ".xpm", 4) != 0)
+		return (1);
+	return (0);
+}
+
+int	is_cub(char *str)
+{
+	size_t	len;
+
+	len = ft_strlen(str);
+	if (len < 4)
+		return (1);
+	if (ft_strncmp(str + (len - 4), ".cub", 4) != 0)
+		return (1);
+	return (0);
 }

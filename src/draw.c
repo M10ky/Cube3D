@@ -6,11 +6,11 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/21 21:45:15 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/21 21:50:43 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/21 23:50:29 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes_raycasting/cub3d.h"
 
 void	draw_ceiling_strip(t_game *game, int col, int end_y)
 {

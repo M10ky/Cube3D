@@ -6,7 +6,7 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/16 11:13:57 by jonandri          #+#    #+#             */
-/*   Updated: 2026/06/15 22:00:50 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/21 23:43:22 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,8 @@ typedef struct s_map
 	char			*so_path;
 	char			*we_path;
 	char			*ea_path;
-
 	int				floor_c;
 	int				ceiling_c;
-
 	t_line			*first_line;
 	t_line			*last_line;
 	int				height;
@@ -55,19 +53,22 @@ typedef struct s_map
 	char			**true_grid;
 	int				map_started;
 	int				width;
-
 	int				pos_x;
 	int				pos_y;
 	char			dir;
 	int				has_dir;
-	// variable pour verifier si le joueur a des directions dans la map
-
 	int				has_no;
 	int				has_so;
 	int				has_we;
 	int				has_ea;
 	int				has_floor;
 	int				has_ceiling;
+
+	int				len;
+
+	int				r;
+	int				g;
+	int				b;
 }					t_map;
 
 typedef enum s_bool
@@ -88,8 +89,8 @@ char				*ft_substr_get(char const *s, unsigned int start,
 char				*get_next_line(int fd);
 int					parse_line(char *line, t_map *map);
 int					parse_texture(char *line, char **path, int *has);
-int					parse_color(char *line, int *color, int *has);
-int					parse_rgb(char *line, int *i, int *r, int *g, int *b);
+int					parse_color(char *line, int *color, int *has, t_map *map);
+int					parse_rgb(char *line, int *i, t_map *map);
 int					get_number(char *line, int *i);
 int					start_map_parsing(char *line, t_map *map);
 int					add_line_to_map(char *line, t_map *map);
@@ -107,4 +108,11 @@ void				reinitialize_map(t_map *map);
 int					completing_flood(t_map *map);
 void				search_player(t_map *map);
 void				free_all(t_map *map);
+int					is_xpm(char *str);
+int					is_cub(char *str);
+int					add_for_texture(char *line, int *i, int *j, int *has);
+int					verify_texture(t_map *map);
+void				print_texture(int sign, char a, char b);
+void				remove_newline(char *line);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 19:47:24 by miokrako          #+#    #+#             */
-/*   Updated: 2026/06/21 21:49:48 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/22 00:02:36 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include "../Libft/libft.h"
-# include "../header/cube.h"
+# include "../includes_parsing/cube.h"
 # include "../minilibx-linux/mlx.h"
 
 # define SCREEN_W    1024
@@ -145,67 +145,70 @@ typedef struct s_game
 	t_map		*map;
 }	t_game;
 
-int		init_mock_config(t_config *config, t_map *map);
-void	cleanup_mock_config(t_config *cfg);
-void	free_map(t_map *map);
-void	free_all(t_map *map);
+int				init_mock_config(t_config *config, t_map *map);
+void			cleanup_mock_config(t_config *cfg);
+void			free_map(t_map *map);
+void			free_all(t_map *map);
 
-int		init_game(t_game *game, t_map *map);
-void	init_player(t_game *game);
-void	put_pixel(t_img *buf, int x, int y, unsigned int color);
-void	cast_ray(t_game *game, int col, t_ray *ray);
+int				init_game(t_game *game, t_map *map);
+void			init_player(t_game *game);
+void			put_pixel(t_img *buf, int x, int y, unsigned int color);
+void			cast_ray(t_game *game, int col, t_ray *ray);
 
-int		game_loop(void *param);
-void	render_frame(t_game *game);
+int				game_loop(void *param);
+void			render_frame(t_game *game);
 
-int		key_press(int key, void *param);
-int		key_release(int key, void *param);
-int		handle_close(void *param);
-void	handle_input(t_game *game);
+int				key_press(int key, void *param);
+int				key_release(int key, void *param);
+int				handle_close(void *param);
+void			handle_input(t_game *game);
 
-void	cleanup(t_game *game);
-void	cleanup_exit(t_game *game);
-int		print_error(const char *msg);
+void			cleanup(t_game *game);
+void			cleanup_exit(t_game *game);
+int				print_error(const char *msg);
 
-int		handle_focus_lost(void *param);
-int		handle_focus_in(void *param);
+int				handle_focus_lost(void *param);
+int				handle_focus_in(void *param);
 
-int		init_framebuffer(t_game *game);
-int		init_mlx(t_game *game);
-void	put_pixel(t_img *buf, int x, int y, unsigned int color);
+int				init_framebuffer(t_game *game);
+int				init_mlx(t_game *game);
+void			put_pixel(t_img *buf, int x, int y, unsigned int color);
 
-void	free_cfg_map(t_config *cfg);
-void	free_cfg_textures(t_config *cfg);
+void			free_cfg_map(t_config *cfg);
+void			free_cfg_textures(t_config *cfg);
 
-void	set_dir_north(t_config *cfg);
-void	set_dir_south(t_config *cfg);
-void	set_dir_east(t_config *cfg);
-void	set_dir_west(t_config *cfg);
+void			set_dir_north(t_config *cfg);
+void			set_dir_south(t_config *cfg);
+void			set_dir_east(t_config *cfg);
+void			set_dir_west(t_config *cfg);
 
-int	setup_map(t_config *cfg, t_map *map);
-void	setup_direction(t_config *cfg, char dir);
-int	setup_textures(t_config *cfg, t_map *map);
-int	setup_player(t_config *cfg, t_map *map);
-void	setup_colors(t_config *cfg, t_map *map);
-void	free_mock_textures(t_config *cfg);
-int	duplicate_map_rows(t_config *cfg, t_map *map, int h);
-void	free_partial_map(char **map, int i);
-int	count_map_height(t_map *map);
-void	calc_delta(t_ray *ray);
-void	calc_step_x(t_game *game, t_ray *ray);
-void	calc_step_y(t_game *game, t_ray *ray);
-void	init_dda(t_game *game, t_ray *ray);
+int				setup_map(t_config *cfg, t_map *map);
+void			setup_direction(t_config *cfg, char dir);
+int				setup_textures(t_config *cfg, t_map *map);
+int				setup_player(t_config *cfg, t_map *map);
+void			setup_colors(t_config *cfg, t_map *map);
+void			free_mock_textures(t_config *cfg);
+int				duplicate_map_rows(t_config *cfg, t_map *map, int h);
+void			free_partial_map(char **map, int i);
+int				count_map_height(t_map *map);
+void			calc_delta(t_ray *ray);
+void			calc_step_x(t_game *game, t_ray *ray);
+void			calc_step_y(t_game *game, t_ray *ray);
+void			init_dda(t_game *game, t_ray *ray);
 
-void	calc_wall_dist(t_ray *ray);
-void	calc_wall_face(t_ray *ray);
-void	calc_draw_bounds(t_ray *ray);
-void	calc_tex_x(t_player *p, t_ray *ray);
-void	calc_wall(t_game *game, t_ray *ray);
-void	draw_ceiling_strip(t_game *game, int col, int end_y);
-void	draw_floor_strip(t_game *game, int col, int start_y);
-void	draw_wall_strip(t_game *game, int col, t_ray *ray);
-void	draw_column(t_game *game, int col, t_ray *ray);
 unsigned int	sample_texture(t_texture *tex, int tx, int ty);
-t_texture	*get_wall_texture(t_game *game, t_ray *ray,
-		double *tex_pos, double *tex_step);
+void			calc_wall_dist(t_ray *ray);
+void			calc_wall_face(t_ray *ray);
+void			calc_draw_bounds(t_ray *ray);
+void			calc_tex_x(t_player *p, t_ray *ray);
+void			calc_wall(t_game *game, t_ray *ray);
+void			draw_ceiling_strip(t_game *game, int col, int end_y);
+void			draw_floor_strip(t_game *game, int col, int start_y);
+void			draw_wall_strip(t_game *game, int col, t_ray *ray);
+void			draw_column(t_game *game, int col, t_ray *ray);
+t_texture		*get_wall_texture(t_game *game, t_ray *ray,
+					double *tex_pos, double *tex_step);
+void			free_paths(t_map *map);
+void			free_grid(t_map *map);
+
 #endif

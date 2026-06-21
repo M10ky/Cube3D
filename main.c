@@ -6,67 +6,30 @@
 /*   By: miokrako <miokrako@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/26 09:54:22 by jonandri          #+#    #+#             */
-/*   Updated: 2026/06/21 21:54:54 by miokrako         ###   ########.fr       */
+/*   Updated: 2026/06/21 23:51:48 by miokrako         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/cub3d.h"
+#include "includes_raycasting/cub3d.h"
 
-void	free_map(t_map *map)
+static void	setup_hooks(t_game *game)
 {
-	t_line	*tmp;
-
-	if (!map)
-		return ;
-	while (map->first_line)
-	{
-		tmp = map->first_line->next;
-		free(map->first_line->content);
-		free(map->first_line);
-		map->first_line = tmp;
-	}
+	mlx_hook(game->win, EVT_KEY_PRESS, 1L << 0, key_press, game);
+	mlx_hook(game->win, EVT_KEY_RELEASE, 1L << 1, key_release, game);
+	mlx_hook(game->win, EVT_FOCUS_IN, 1L << 21, handle_focus_in, game);
+	mlx_hook(game->win, EVT_FOCUS_OUT, 1L << 21, handle_focus_lost, game);
+	mlx_hook(game->win, EVT_CLOSE, 0, handle_close, game);
+	mlx_loop_hook(game->mlx, game_loop, game);
 }
 
-void	free_all(t_map *map)
+static int	run_game(t_game *game, t_map *map)
 {
-	int	i;
-
-	if (!map)
-		return ;
-	if (!map)
-		return ;
-	if (map->no_path)
-	{
-		free(map->no_path);
-		map->no_path = NULL;
-	}
-	if (map->so_path)
-	{
-		free(map->so_path);
-		map->so_path = NULL;
-	}
-	if (map->ea_path)
-	{
-		free(map->ea_path);
-		map->ea_path = NULL;
-	}
-	if (map->we_path)
-	{
-		free(map->we_path);
-		map->we_path = NULL;
-	}
-	if (map->grid)
-	{
-		i = 0;
-		while (map->grid[i] != NULL)
-		{
-			free(map->grid[i]);
-			i++;
-		}
-		free(map->grid);
-		map->grid = NULL;
-		map->true_grid = NULL;
-	}
+	ft_memset(game, 0, sizeof(t_game));
+	if (init_game(game, map) != 0)
+		return (1);
+	setup_hooks(game);
+	mlx_loop(game->mlx);
+	return (0);
 }
 
 int	main(int argc, char **argv)
@@ -79,30 +42,13 @@ int	main(int argc, char **argv)
 		printf("Input : [cube3d] [file.cub]\n");
 		return (1);
 	}
-	if (read_file(argv[1], &map) == 1)
-	{
-		ft_memset(&game, 0, sizeof(t_game));
-		if (init_game(&game, &map) != 0)
-		{
-			free_all(&map);
-			free_map(&map);
-			return (1);
-		}
-		mlx_hook(game.win, EVT_KEY_PRESS, 1L << 0, key_press, &game);
-		mlx_hook(game.win, EVT_KEY_RELEASE, 1L << 1, key_release, &game);
-		mlx_hook(game.win, EVT_FOCUS_IN, 1L << 21, handle_focus_in, &game);
-		mlx_hook(game.win, EVT_FOCUS_OUT, 1L << 21, handle_focus_lost, &game);
-		mlx_hook(game.win, EVT_CLOSE, 0, handle_close, &game);
-		mlx_loop_hook(game.mlx, game_loop, &game);
-		mlx_loop(game.mlx);
-		free_all(&map);
-		free_map(&map);
-	}
-	else
+	if (read_file(argv[1], &map) != 1 || run_game(&game, &map) != 0)
 	{
 		free_all(&map);
 		free_map(&map);
 		return (1);
 	}
+	free_all(&map);
+	free_map(&map);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flood.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonandri <jonandri@map->true_grid[y]tudent.42antananari    +#+  +:+       +#+        */
+/*   By: jonandri <jonandri@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/02 10:03:27 by jonandri          #+#    #+#             */
-/*   Updated: 2026/06/02 13:15:37 by jonandri         ###   ########.fr       */
+/*   Created: 2026/06/17 18:10:25 by jonandri          #+#    #+#             */
+/*   Updated: 2026/06/17 18:11:02 by jonandri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ void	find_to_flood(t_map *map, int *col, int *raw)
 	}
 }
 
-void reinitialize_map(t_map *map)
+void	reinitialize_map(t_map *map)
 {
 	int	i;
-	int j;
+	int	j;
 
 	i = 0;
 	while (map->true_grid[i] != NULL)
@@ -90,4 +90,3 @@ int	completing_flood(t_map *map)
 	reinitialize_map(map);
 	return (0);
 }
-
